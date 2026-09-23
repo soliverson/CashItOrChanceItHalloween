@@ -1,1555 +1,3010 @@
-/* ======================================================
-   BASE
-   ====================================================== */
+/* =========================================================
+   CASH IT OR CHANCE IT
+   HALLOWEEN EDITION
+   MadeToPlayGames
+
+   GROUP PARTY GAME VERSION
+   ========================================================= */
+
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+:root {
+  --orange: #ff7200;
+  --orange-bright: #ff9d00;
+  --green: #62ff00;
+  --purple: #d817ff;
+  --dark-purple: #21002f;
+  --black: #050208;
+  --cream: #fff7e8;
+}
+
+
+/* =========================================================
+   RESET / GLOBAL
+   ========================================================= */
 
 * {
   box-sizing: border-box;
 }
 
-html {
+html,
+body {
   margin: 0;
   padding: 0;
+
   width: 100%;
   min-height: 100%;
-  background: #000 !important;
+}
+
+html {
+  background: #050208;
 }
 
 body {
-  margin: 0;
-  padding: 5px;
-  width: 100%;
-  min-height: 100vh;
+  font-family:
+    Impact,
+    Haettenschweiler,
+    "Arial Narrow Bold",
+    Arial,
+    sans-serif;
 
-  background: #000 !important;
+  color: white;
 
-  color: #d4af37;
+  background: #050208;
 
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-size: 1em;
+  overflow-x: hidden;
 }
 
 
-/* ======================================================
-   HEADER
-   ====================================================== */
+/* =========================================================
+   TOP HALLOWEEN SCENERY
+   ========================================================= */
 
-header {
+.halloween-scenery {
   position: relative;
 
-  background: #000;
-
-  border-bottom: 2px solid #d4af37;
-
-  padding-bottom: 5px;
-  margin-bottom: 5px;
-}
-
-#headerContent {
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  flex-wrap: wrap;
-
-  background: #000;
-}
-
-#headerPhoto {
-  width: 118px;
-  height: auto;
-
-  object-fit: cover;
-
-  border: 4px solid #ffd700;
-
-  border-radius: 10px;
-
-  box-shadow:
-    0 0 15px #ffd700,
-    0 0 25px rgba(255, 215, 0, 0.45);
-
-  margin: 5px;
-}
-
-#headerTitles {
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-}
-
-h1 {
-  font-size: clamp(2.3rem, 3vw, 3.1rem);
-
-  margin: 2px 0;
-
-  line-height: 1;
-
-  background:
-    linear-gradient(
-      45deg,
-      #fff,
-      #ffd700,
-      #fff
-    );
-
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  background-clip: text;
-
-  animation: shine 3s ease-in-out infinite;
-
-  text-shadow:
-    0 0 10px gold,
-    0 0 2px goldenrod;
-}
-
-@keyframes shine {
-  0% {
-    filter: brightness(1);
-  }
-
-  50% {
-    filter: brightness(1.5);
-  }
-
-  100% {
-    filter: brightness(1);
-  }
-}
-
-
-/* ======================================================
-   HEADER BUTTONS
-   ====================================================== */
-
-#headerButtons {
-  position: absolute;
-
-  top: 10px;
-  right: 10px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: flex-end;
-}
-
-#fullScreenBtn,
-#watchIntroBtn {
-  background: rgba(212, 175, 55, 0.95);
-
-  border: 1px solid #d4af37;
-
-  border-radius: 5px;
-
-  padding: 6px 12px;
-
-  font-size: 0.9em;
-
-  color: #000;
-
-  margin-bottom: 5px;
-}
-
-#fullScreenBtn:hover,
-#watchIntroBtn:hover {
-  background: #ffd700;
-}
-
-
-/* ======================================================
-   MAIN
-   ====================================================== */
-
-main {
-  display: flex;
-
-  width: 100%;
-
-  max-width: 1300px;
-
-  margin: 0 auto;
-
-  gap: 10px;
-
-  background: #000;
-}
-
-
-/* ======================================================
-   BRIEFCASE SECTION
-   ====================================================== */
-
-#briefcasesSection {
-  flex: 2;
-
-  min-width: 0;
-
-  margin-right: 10px;
-
-  text-align: center;
-
-  background: #000;
-
-  border-radius: 5px;
-
-  padding: 10px;
-}
-
-
-/* ======================================================
-   BRIEFCASE GRID
-   ====================================================== */
-
-#briefcasesContainer {
-  display: grid;
-
-  grid-template-columns:
-    repeat(7, minmax(90px, 115px));
-
-  justify-content: center;
-
-  align-items: start;
-
-  gap: 6px;
-
-  width: 100%;
-
-  margin: 0 auto;
-
-  background: #000;
-}
-
-
-/* ======================================================
-   GAME MESSAGE
-   ====================================================== */
-
-#briefcasesInfo {
-  margin-top: 8px;
-
-  background: #000;
-}
-
-#gameMessage {
-  margin: 0;
-
-  text-align: center;
-
-  font-weight: 800;
-
-  color: #ffd700;
-
-  font-size:
-    clamp(
-      20px,
-      1.7vw,
-      30px
-    );
-
-  text-shadow:
-    0 0 6px
-    rgba(255, 215, 0, 0.65);
-}
-
-
-/* ======================================================
-   BRIEFCASES
-   ====================================================== */
-
-.briefcase {
-  position: relative;
-
-  background-color: #c0c0c0;
-
-  border: 2px solid #c0c0c0;
-
-  border-radius: 8px;
-
-  padding: 3px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  min-width: 0;
-
-  color: #000;
-
-  user-select: none;
-
-  cursor: pointer;
-
-  transition:
-    transform 0.2s ease,
-    background-color 0.3s ease,
-    box-shadow 0.2s ease;
-
-  overflow: hidden;
-}
-
-.briefcase:not(.center-open):not(.personal-box-reveal):hover {
-  transform: scale(1.04);
-
-  background-color:
-    rgba(255, 215, 0, 0.6);
-
-  box-shadow:
-    0 0 8px
-    rgba(255, 215, 0, 0.6);
-}
-
-
-/* ======================================================
-   BRIEFCASE PHOTOS
-   ====================================================== */
-
-.briefcase-img {
   display: block;
 
   width: 100%;
 
-  aspect-ratio: 2 / 3;
+  height: 170px;
+  min-height: 170px;
 
-  object-fit: cover;
+  background-image:
+    url("images/halloween-background.webp");
 
-  object-position: center top;
+  background-size:
+    100% auto;
 
-  margin: 0;
+  background-position:
+    center top;
 
-  border-radius: 5px;
+  background-repeat:
+    no-repeat;
+
+  border-bottom:
+    3px solid var(--orange);
+
+  box-shadow:
+    0 4px 18px rgba(255, 114, 0, 0.55);
+
+  pointer-events:
+    none;
+
+  z-index:
+    1;
 }
 
 
-/* ======================================================
-   BOX NUMBER
-   ====================================================== */
+/* =========================================================
+   SHARED PAGE WIDTH
+   ========================================================= */
 
-.briefcase-number {
-  width: 100%;
+header,
+main {
+  width:
+    calc(100% - 28px);
 
-  margin-top: 2px;
+  max-width:
+    1600px;
 
-  padding: 4px 6px;
+  margin-left:
+    auto;
 
-  text-align: center;
-
-  font-weight: bold;
-
-  font-size: 1em;
-
-  line-height: 1;
-
-  color: #000;
-
-  background: #ffd700;
-
-  border-radius: 4px;
-
-  white-space: nowrap;
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
+  margin-right:
+    auto;
 }
 
 
-/* ======================================================
-   PERSONAL BOX IN GRID
-   ====================================================== */
+/* =========================================================
+   HEADER
+   ========================================================= */
 
-.briefcase.personal {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 215, 0, 0.95),
-      rgba(255, 215, 0, 0.55)
-    );
+header {
+  position:
+    relative;
 
-  border: 5px solid #ffd700;
-
-  transform: scale(1.04);
-
-  z-index: 20;
-
-  animation:
-    pulseHighlight
-    1.3s
-    infinite;
-}
-
-.briefcase.personal:hover {
-  transform: scale(1.04);
-}
-
-@keyframes pulseHighlight {
-  0% {
-    box-shadow:
-      0 0 10px #ffd700,
-      0 0 18px rgba(255, 215, 0, 0.65);
-  }
-
-  50% {
-    box-shadow:
-      0 0 16px #ffd700,
-      0 0 30px #ffd700,
-      0 0 42px rgba(255, 215, 0, 0.8);
-  }
-
-  100% {
-    box-shadow:
-      0 0 10px #ffd700,
-      0 0 18px rgba(255, 215, 0, 0.65);
-  }
-}
-
-
-/* ======================================================
-   OPENED BOX
-   ====================================================== */
-
-.briefcase.opened {
-  opacity: 0.5;
-}
-
-
-/* ======================================================
-   PRIZE SECTION
-   ====================================================== */
-
-#prizesSection {
-  flex: 0 0 220px;
-
-  border-left:
-    2px solid #d4af37;
-
-  padding-left: 8px;
-
-  text-align: center;
-
-  background: #000;
-}
-
-#prizesSection h2 {
-  margin:
-    5px
-    0
+  margin-top:
     8px;
 
-  font-size:
-    clamp(
-      1.45rem,
-      2vw,
-      2rem
-    );
+  margin-bottom:
+    8px;
 
-  line-height: 1;
-
-  color: #ffd700;
-
-  font-weight: 900;
-
-  text-shadow:
-    0 0 10px
-    rgba(255, 215, 0, 0.75);
+  z-index:
+    5;
 }
 
 
-/* ======================================================
-   PRIZE BOARD
-   ====================================================== */
+/* =========================================================
+   HEADER CONTAINER
 
-#prizeBoard {
-  display: grid;
+   There are now ONLY TWO columns:
+
+   1. Game title
+   2. Control buttons
+
+   No featured-person column.
+   ========================================================= */
+
+#headerContent {
+  position:
+    relative;
+
+  width:
+    100%;
+
+  min-height:
+    118px;
+
+  display:
+    grid;
 
   grid-template-columns:
-    repeat(2, 1fr);
+    minmax(0, 1fr)
+    190px;
+
+  align-items:
+    center;
 
   gap:
-    3px
-    10px;
-
-  background: #000;
-}
-
-.prize-column {
-  margin: 0;
-
-  padding: 0;
-
-  list-style: none;
-}
-
-#prizeBoard li {
-  margin: 3px 0;
-
-  font-size:
-    clamp(
-      1rem,
-      1.15vw,
-      1.3rem
-    );
-
-  line-height: 1.15;
-
-  font-weight: 700;
-
-  color: #ffd700;
-
-  white-space: nowrap;
-}
-
-#prizeBoard li.eliminated {
-  color: #666;
-
-  text-decoration: line-through;
-
-  opacity: 0.7;
-}
-
-
-/* ======================================================
-   PREVIOUS OFFERS
-   ====================================================== */
-
-#offersHistory {
-  margin-top: 5px;
-
-  padding: 0;
-
-  list-style: none;
-}
-
-#offersHistory li {
-  font-size:
-    clamp(
-      0.95rem,
-      1vw,
-      1.15rem
-    );
-
-  line-height: 1.15;
-
-  color: #d4af37;
-
-  margin: 3px 0;
-}
-
-
-/* ======================================================
-   GENERAL LISTS
-   ====================================================== */
-
-ul {
-  list-style: none;
-
-  padding: 0;
-
-  margin: 0;
-}
-
-
-/* ======================================================
-   BUTTONS
-   ====================================================== */
-
-button {
-  background:
-    linear-gradient(
-      45deg,
-      #d4af37,
-      #ffcf00
-    );
-
-  color: #000;
-
-  border: none;
+    14px;
 
   padding:
-    8px
-    16px;
+    8px 15px;
 
-  margin: 6px;
-
-  cursor: pointer;
-
-  border-radius: 12px;
-
-  font-size: 1em;
-
-  box-shadow:
-    0 4px 6px
-    rgba(0, 0, 0, 0.3);
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-button:hover {
-  transform: scale(1.05);
-
-  box-shadow:
-    0 6px 10px
-    rgba(0, 0, 0, 0.4);
-}
-
-button:active {
-  transform: scale(0.98);
-}
-
-
-/* ======================================================
-   DEAL
-   ====================================================== */
-
-button.deal {
   background:
     linear-gradient(
-      45deg,
-      #4caf50,
-      #2e7d32
+      180deg,
+      rgba(47, 0, 58, 0.96),
+      rgba(10, 1, 16, 0.98)
     );
-
-  color: #fff;
 
   border:
-    2px solid #1b5e20;
+    4px solid var(--orange);
 
-  font-weight: bold;
-}
-
-
-/* ======================================================
-   NO DEAL
-   ====================================================== */
-
-button.decline {
-  background:
-    linear-gradient(
-      45deg,
-      #ff4c4c,
-      #d10000
-    );
-
-  color: #fff;
-
-  border:
-    2px solid #a30000;
-
-  font-weight: bold;
-}
-
-
-/* ======================================================
-   MODAL
-   ====================================================== */
-
-.modal {
-  display: none;
-
-  position: fixed;
-
-  z-index: 10000;
-
-  inset: 0;
-
-  width: 100vw;
-
-  height: 100vh;
-
-  background:
-    rgba(0, 0, 0, 0.9);
-
-  justify-content: center;
-
-  align-items: center;
-
-  overflow: hidden;
-}
-
-.modal-content {
-  background: #222;
-
-  padding: 20px;
-
-  border:
-    2px solid #d4af37;
-
-  width: 80%;
-
-  max-width: 500px;
-
-  text-align: center;
-
-  border-radius: 8px;
-
-  animation:
-    modalEntrance
-    0.5s
-    ease-out;
-}
-
-@keyframes modalEntrance {
-  from {
-    opacity: 0;
-
-    transform:
-      translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform:
-      translateY(0);
-  }
-}
-
-
-/* ======================================================
-   MODAL MESSAGES
-   ====================================================== */
-
-.message {
-  margin-bottom: 10px;
-
-  line-height: 1.3;
-
-  font-size: 1.1em;
-}
-
-.cases-to-open {
-  font-size:
-    clamp(
-      24px,
-      2.7vw,
-      46px
-    );
-
-  font-weight: 800;
-
-  color: #ffd700;
-
-  text-align: center;
-}
-
-.cases-to-open strong {
-  font-size: 1.35em;
-}
-
-.round-number {
-  font-size:
-    clamp(
-      26px,
-      3vw,
-      50px
-    );
-
-  font-weight: 800;
-
-  color: #ffd700;
-}
-
-.bank-offer {
-  font-size:
-    clamp(
-      32px,
-      4vw,
-      65px
-    );
-
-  font-weight: 900;
-
-  color: #ffd700;
-}
-
-
-/* ======================================================
-   RESULT MODAL
-   ====================================================== */
-
-.result-modal {
-  background:
-    linear-gradient(
-      135deg,
-      #ffd700,
-      #ffea00,
-      #ffd700
-    );
+  border-radius:
+    20px;
 
   box-shadow:
-    0 0 20px 5px
-    rgba(255, 215, 0, 0.8);
+    0 0 10px var(--orange),
+    0 0 25px rgba(255, 114, 0, 0.4);
 
-  animation:
-    resultPulse
-    2s
-    infinite;
-}
-
-.result-modal .message {
-  color: #000;
-
-  font-weight: bold;
-}
-
-@keyframes resultPulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.02);
-  }
+  overflow:
+    hidden;
 }
 
 
-/* ======================================================
-   FIREWORKS
-   ====================================================== */
+/* Purple glow inside header */
 
-#fireworksContainer {
-  position: fixed;
+#headerContent::after {
+  content:
+    "";
 
-  inset: 0;
+  position:
+    absolute;
 
-  width: 100vw;
+  inset:
+    0;
 
-  height: 100vh;
-
-  pointer-events: none;
-
-  overflow: hidden;
-
-  z-index: 9999;
-}
-
-.firework {
-  position: absolute;
-
-  width: 8px;
-
-  height: 8px;
+  pointer-events:
+    none;
 
   background:
     radial-gradient(
-      circle,
-      #fff,
-      rgba(212, 175, 55, 0)
+      ellipse at center,
+      rgba(102, 0, 125, 0.17),
+      transparent 65%
+    );
+}
+
+
+/* =========================================================
+   HEADER TITLE
+   ========================================================= */
+
+#headerTitles {
+  grid-column:
+    1;
+
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  width:
+    100%;
+
+  min-width:
+    0;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  text-align:
+    center;
+}
+
+
+#headerTitles h1 {
+  margin:
+    0;
+
+  padding:
+    0;
+
+  display:
+    flex;
+
+  flex-direction:
+    row;
+
+  flex-wrap:
+    nowrap;
+
+  align-items:
+    baseline;
+
+  justify-content:
+    center;
+
+  gap:
+    10px;
+
+  white-space:
+    nowrap;
+
+  font-size:
+    clamp(46px, 5.4vw, 86px);
+
+  line-height:
+    0.92;
+
+  text-transform:
+    uppercase;
+}
+
+
+.cash-title {
+  color:
+    var(--orange-bright);
+
+  text-shadow:
+    4px 5px #762000,
+    0 0 14px rgba(255, 114, 0, 0.45);
+}
+
+
+.or-title {
+  color:
+    white;
+
+  font-size:
+    0.55em;
+
+  text-shadow:
+    3px 4px #333333;
+}
+
+
+.chance-title {
+  color:
+    var(--green);
+
+  text-shadow:
+    4px 5px #176600,
+    0 0 14px rgba(98, 255, 0, 0.45);
+}
+
+
+.halloween-subtitle {
+  margin-top:
+    5px;
+
+  color:
+    var(--orange);
+
+  font-size:
+    clamp(18px, 1.8vw, 29px);
+
+  line-height:
+    1;
+
+  text-transform:
+    uppercase;
+
+  text-shadow:
+    2px 3px #5b1900;
+}
+
+
+/* =========================================================
+   HEADER BUTTONS
+   ========================================================= */
+
+#headerButtons {
+  grid-column:
+    2;
+
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  width:
+    100%;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    6px;
+}
+
+
+button {
+  font-family:
+    Impact,
+    Haettenschweiler,
+    "Arial Narrow Bold",
+    Arial,
+    sans-serif;
+}
+
+
+#headerButtons button,
+#introButtons button {
+  width:
+    100%;
+
+  padding:
+    7px 8px;
+
+  border:
+    3px solid #ffd18b;
+
+  border-radius:
+    9px;
+
+  background:
+    linear-gradient(
+      #ff9d00,
+      #ff6500
     );
 
-  border-radius: 50%;
+  color:
+    #160700;
 
-  animation:
-    explode
-    1.5s
-    ease-out
-    forwards;
-}
+  text-transform:
+    uppercase;
 
-@keyframes explode {
-  0% {
-    transform: scale(1);
+  cursor:
+    pointer;
 
-    opacity: 1;
-  }
-
-  100% {
-    transform: scale(5);
-
-    opacity: 0;
-  }
+  box-shadow:
+    0 0 8px var(--orange),
+    inset 0 0 7px rgba(255, 255, 255, 0.32);
 }
 
 
-/* ======================================================
-   INTRO
-   ====================================================== */
-
-#introVideoContainer {
-  position: fixed;
-
-  inset: 0;
-
-  width: 100vw;
-
-  height: 100vh;
-
-  background: #000;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
-
-  z-index: 20000;
-}
-
-#introVideo {
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: cover;
+#headerButtons button:hover,
+#introButtons button:hover {
+  filter:
+    brightness(1.12);
 }
 
 
-/* ======================================================
-   INTRO BUTTONS
-   ====================================================== */
+#musicToggleBtn.music-off {
+  background:
+    linear-gradient(
+      #3a1549,
+      #190622
+    );
 
-#introButtons {
-  position: absolute;
+  color:
+    var(--orange-bright);
 
-  bottom: 40px;
+  border-color:
+    #8c37a9;
+}
 
-  left: 50%;
+
+/* =========================================================
+   MAIN GAME
+   ========================================================= */
+
+main {
+  position:
+    relative;
+
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(0, 2.35fr)
+    minmax(300px, 1fr);
+
+  gap:
+    10px;
+
+  z-index:
+    3;
+}
+
+
+/* =========================================================
+   LEFT GAME PANEL
+   ========================================================= */
+
+#briefcasesSection {
+  position:
+    relative;
+
+  min-width:
+    0;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  padding:
+    18px 14px 10px;
+
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(5, 1, 8, 0.32) 0%,
+      rgba(5, 1, 8, 0.48) 48%,
+      rgba(5, 1, 8, 0.62) 100%
+    ),
+    url("images/halloween-background.webp");
+
+  background-size:
+    cover,
+    cover;
+
+  background-position:
+    center,
+    center 53%;
+
+  background-repeat:
+    no-repeat,
+    no-repeat;
+
+  border:
+    4px solid var(--orange);
+
+  border-radius:
+    18px;
+
+  box-shadow:
+    0 0 12px rgba(255, 114, 0, 0.8),
+    inset 0 0 28px rgba(0, 0, 0, 0.55);
+
+  overflow:
+    hidden;
+}
+
+
+/* Dark edge around game area */
+
+#briefcasesSection::after {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  pointer-events:
+    none;
+
+  z-index:
+    0;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 40%,
+      rgba(0, 0, 0, 0.26) 100%
+    );
+}
+
+
+/* =========================================================
+   PHOTO GRID
+   ========================================================= */
+
+#briefcasesContainer {
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  flex:
+    1 1 auto;
+
+  min-height:
+    0;
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(6, minmax(0, 1fr));
+
+  gap:
+    22px 13px;
+
+  align-items:
+    center;
+
+  align-content:
+    center;
+
+  justify-items:
+    center;
+
+  padding:
+    16px 5px 20px;
+}
+
+
+/* =========================================================
+   PHOTO PICK
+   ========================================================= */
+
+.briefcase {
+  position:
+    relative;
+
+  width:
+    min(100%, 125px);
+
+  aspect-ratio:
+    1 / 0.96;
+
+  padding:
+    5px;
+
+  background:
+    linear-gradient(
+      #1a0c06,
+      #090303
+    );
+
+  border:
+    4px solid var(--orange);
+
+  border-radius:
+    10px;
+
+  cursor:
+    pointer;
+
+  box-shadow:
+    0 0 8px var(--orange),
+    0 0 18px rgba(255, 114, 0, 0.75),
+    0 7px 12px rgba(0, 0, 0, 0.5);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+
+/* Suitcase-style handle */
+
+.briefcase::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  width:
+    38%;
+
+  height:
+    13px;
+
+  top:
+    -17px;
+
+  left:
+    31%;
+
+  background:
+    linear-gradient(
+      #242424,
+      #080808
+    );
+
+  border:
+    4px solid #eeeeee;
+
+  border-bottom:
+    0;
+
+  border-radius:
+    8px 8px 0 0;
+}
+
+
+.briefcase:hover {
+  transform:
+    translateY(-3px)
+    scale(1.03);
+
+  box-shadow:
+    0 0 12px var(--orange),
+    0 0 25px rgba(255, 114, 0, 0.9);
+}
+
+
+.briefcase-img {
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+
+  border-radius:
+    4px;
+}
+
+
+.briefcase-number {
+  position:
+    absolute;
+
+  left:
+    50%;
+
+  bottom:
+    -14px;
 
   transform:
     translateX(-50%);
 
-  display: flex;
+  min-width:
+    34px;
 
-  gap: 12px;
+  padding:
+    2px 6px;
 
-  justify-content: center;
+  background:
+    var(--orange-bright);
 
-  align-items: center;
+  color:
+    #080208;
 
-  z-index: 21000;
+  border:
+    2px solid #fff0ba;
+
+  border-radius:
+    5px;
+
+  text-align:
+    center;
+
+  white-space:
+    nowrap;
+
+  font:
+    900 11px Arial,
+    sans-serif;
 }
 
-#introButtons button {
+
+/* =========================================================
+   PERSONAL / PLAYER PICK
+   ========================================================= */
+
+.briefcase.personal {
+  border-color:
+    var(--green);
+
+  box-shadow:
+    0 0 10px var(--green),
+    0 0 24px rgba(98, 255, 0, 0.95);
+}
+
+
+.briefcase.personal .briefcase-number {
+  background:
+    var(--green);
+
+  border-color:
+    #d8ffbd;
+}
+
+
+/* =========================================================
+   OPENED PICK
+   ========================================================= */
+
+.briefcase.opened {
+  opacity:
+    0.34;
+
+  filter:
+    grayscale(0.75)
+    brightness(0.6);
+
+  cursor:
+    default;
+
+  box-shadow:
+    0 0 4px rgba(255, 114, 0, 0.35);
+}
+
+
+.briefcase.opened:hover {
+  transform:
+    none;
+}
+
+
+/* =========================================================
+   WOOD MESSAGE SIGN
+   ========================================================= */
+
+#briefcasesInfo {
+  position:
+    relative;
+
+  z-index:
+    5;
+
+  flex:
+    0 0 auto;
+
+  width:
+    90%;
+
+  min-height:
+    62px;
+
+  margin:
+    5px auto 0;
+
   padding:
-    12px
+    8px 45px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    12px;
+
+  background:
+    linear-gradient(
+      0deg,
+      rgba(20, 7, 0, 0.28) 0,
+      transparent 2px,
+      transparent 8px,
+      rgba(20, 7, 0, 0.20) 9px,
+      transparent 10px
+    ),
+    linear-gradient(
+      90deg,
+      #351605 0%,
+      #6b3514 12%,
+      #8a4b22 28%,
+      #5a2a0c 47%,
+      #7d421b 66%,
+      #4b2109 82%,
+      #351605 100%
+    );
+
+  background-size:
+    100% 11px,
+    100% 100%;
+
+  border:
+    4px solid #241006;
+
+  border-radius:
+    8px;
+
+  box-shadow:
+    0 0 0 2px #9b5a2c,
+    inset 0 2px 3px rgba(255, 190, 110, 0.18),
+    inset 0 -5px 8px rgba(0, 0, 0, 0.35),
+    0 6px 16px rgba(0, 0, 0, 0.72);
+
+  text-align:
+    center;
+}
+
+
+/* Nail heads */
+
+#briefcasesInfo::before,
+#briefcasesInfo::after {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    50%;
+
+  width:
+    7px;
+
+  height:
+    7px;
+
+  transform:
+    translateY(-50%);
+
+  border-radius:
+    50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 35%,
+      #d2b189,
+      #5a4433 55%,
+      #1b110c 100%
+    );
+
+  box-shadow:
+    0 0 3px black;
+}
+
+
+#briefcasesInfo::before {
+  left:
+    15px;
+}
+
+
+#briefcasesInfo::after {
+  right:
+    15px;
+}
+
+
+#gameMessage {
+  margin:
+    0;
+
+  color:
+    var(--orange-bright);
+
+  font-size:
+    clamp(18px, 1.7vw, 28px);
+
+  line-height:
+    1;
+
+  text-transform:
+    uppercase;
+
+  text-shadow:
+    3px 3px #1b0900,
+    0 0 4px rgba(255, 157, 0, 0.45);
+}
+
+
+.message-pumpkin {
+  flex:
+    0 0 auto;
+
+  font-size:
+    23px;
+}
+
+
+/* =========================================================
+   RIGHT PANEL
+   ========================================================= */
+
+#prizesSection {
+  position:
+    relative;
+
+  min-width:
+    0;
+
+  padding:
+    8px 9px 10px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(28, 0, 40, 0.98),
+      rgba(8, 1, 13, 0.99)
+    );
+
+  border:
+    4px solid var(--purple);
+
+  border-radius:
+    18px;
+
+  box-shadow:
+    0 0 10px var(--purple),
+    0 0 25px rgba(216, 23, 255, 0.45);
+
+  overflow:
+    hidden;
+}
+
+
+.tricks-title,
+.offers-title {
+  margin:
+    0;
+
+  text-align:
+    center;
+
+  text-transform:
+    uppercase;
+}
+
+
+.tricks-title {
+  margin-bottom:
+    6px;
+
+  color:
+    var(--green);
+
+  font-size:
+    clamp(28px, 2.7vw, 45px);
+
+  line-height:
+    1;
+
+  text-shadow:
+    3px 4px #155800,
+    0 0 10px rgba(98, 255, 0, 0.55);
+}
+
+
+/* =========================================================
+   PRIZE BOARD
+   ========================================================= */
+
+#prizeBoard {
+  margin:
+    0;
+
+  padding:
+    0;
+
+  list-style:
+    none;
+
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:
+    6px;
+}
+
+
+.prize-column {
+  margin:
+    0;
+
+  padding:
+    0;
+
+  list-style:
+    none;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    4px;
+}
+
+
+.prize-column li {
+  min-height:
+    27px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    6px;
+
+  padding:
+    3px 7px;
+
+  background:
+    linear-gradient(
+      #130b08,
+      #050304
+    );
+
+  border:
+    2px solid #8c4a00;
+
+  border-radius:
+    6px;
+
+  color:
+    var(--orange-bright);
+
+  font:
+    900 clamp(11px, 1vw, 17px) Arial,
+    sans-serif;
+}
+
+
+.prize-pumpkin {
+  flex:
+    0 0 auto;
+
+  font-size:
+    16px;
+}
+
+
+.prize-amount {
+  flex:
+    1;
+
+  text-align:
+    center;
+}
+
+
+.prize-column li.eliminated {
+  opacity:
+    0.22;
+
+  filter:
+    grayscale(1);
+
+  text-decoration:
+    line-through;
+}
+
+
+/* =========================================================
+   SPOOKY DIVIDER
+   ========================================================= */
+
+.spooky-divider {
+  display:
+    grid;
+
+  grid-template-columns:
+    auto 1fr auto;
+
+  align-items:
+    center;
+
+  gap:
+    7px;
+
+  margin:
+    8px 0 3px;
+
+  color:
+    var(--purple);
+}
+
+
+.spooky-divider span:nth-child(2) {
+  height:
+    3px;
+
+  background:
+    var(--purple);
+
+  box-shadow:
+    0 0 8px var(--purple);
+}
+
+
+/* =========================================================
+   PREVIOUS OFFERS
+   ========================================================= */
+
+.offers-title {
+  margin:
+    3px 0 5px;
+
+  color:
+    var(--purple);
+
+  font-size:
+    clamp(20px, 1.8vw, 31px);
+
+  line-height:
+    1;
+
+  text-shadow:
+    2px 3px #4d075c;
+}
+
+
+#offersHistory {
+  min-height:
+    58px;
+
+  max-height:
+    115px;
+
+  margin:
+    0;
+
+  padding:
+    5px;
+
+  overflow-y:
+    auto;
+
+  list-style:
+    none;
+
+  background:
+    rgba(32, 13, 40, 0.75);
+
+  border:
+    2px solid #75319a;
+
+  border-radius:
+    8px;
+}
+
+
+#offersHistory li {
+  display:
+    flex;
+
+  justify-content:
+    space-between;
+
+  padding:
+    3px 5px;
+
+  border-bottom:
+    1px solid rgba(216, 23, 255, 0.2);
+
+  font:
+    700 12px Arial,
+    sans-serif;
+}
+
+
+#offersHistory strong {
+  color:
+    var(--orange-bright);
+}
+
+
+/* =========================================================
+   BOTTOM HALLOWEEN SCENE
+   ========================================================= */
+
+.bottom-scene {
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    155px;
+
+  min-height:
+    155px;
+
+  margin-top:
+    0;
+
+  background-image:
+    url("images/bottom-halloween-strip.webp");
+
+  background-size:
+    cover;
+
+  background-position:
+    center bottom;
+
+  background-repeat:
+    no-repeat;
+
+  pointer-events:
+    none;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal {
+  position:
+    fixed;
+
+  inset:
+    0;
+
+  display:
+    none;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  padding:
     20px;
 
-  font-size: 1.1em;
+  background:
+    rgba(0, 0, 0, 0.82);
 
-  font-weight: bold;
-
-  border-radius: 8px;
-
-  white-space: nowrap;
-}
-
-#introPlayButton,
-#introFullScreenButton,
-#skipIntroButton {
-  position: static;
+  z-index:
+    5000;
 }
 
 
-/* ======================================================
-   TABLET
-   ====================================================== */
+.modal-content {
+  width:
+    min(92vw, 660px);
 
-@media (max-width: 1200px) {
+  padding:
+    28px;
 
-  #briefcasesContainer {
-    grid-template-columns:
-      repeat(
-        5,
-        minmax(75px, 100px)
-      );
-  }
+  text-align:
+    center;
 
-  #prizesSection {
-    flex:
-      0 0 200px;
-  }
+  background:
+    linear-gradient(
+      #250031,
+      #09020e
+    );
+
+  border:
+    4px solid var(--orange);
+
+  border-radius:
+    20px;
+
+  box-shadow:
+    0 0 18px var(--orange),
+    0 0 45px rgba(216, 23, 255, 0.67);
 }
 
 
-@media (max-width: 768px) {
+.modal-content button {
+  min-width:
+    150px;
 
-  body {
-    padding: 4px;
-  }
+  margin:
+    10px 7px 0;
 
-  main {
-    flex-direction: column;
+  padding:
+    12px 18px;
 
-    align-items: center;
-  }
+  border-radius:
+    10px;
 
-  #briefcasesSection {
-    width: 100%;
+  font-size:
+    20px;
 
-    margin-right: 0;
-  }
+  text-transform:
+    uppercase;
 
-  #briefcasesContainer {
-    grid-template-columns:
-      repeat(
-        3,
-        minmax(85px, 1fr)
-      );
-  }
-
-  #prizesSection {
-    width: 100%;
-
-    max-width: 500px;
-
-    border-left: none;
-
-    border-top:
-      2px solid #d4af37;
-
-    margin-top: 10px;
-
-    padding-top: 10px;
-  }
-
-  #headerPhoto {
-    width: 85px;
-  }
-
-  h1 {
-    font-size: 1.7em;
-  }
+  cursor:
+    pointer;
 }
 
 
-/* ======================================================
-   DESKTOP / LAPTOP FULLSCREEN
-   ====================================================== */
+.modal-content .deal {
+  background:
+    linear-gradient(
+      #7aff21,
+      #37d600
+    );
 
-@media (min-width: 769px) {
+  border:
+    3px solid #baff88;
 
-  html:fullscreen,
-  html:fullscreen body {
-    width: 100vw;
+  box-shadow:
+    0 0 18px var(--green);
+}
 
-    height: 100vh;
 
-    margin: 0;
+.modal-content .decline {
+  background:
+    linear-gradient(
+      #ffad16,
+      #ff6500
+    );
 
-    padding: 0;
+  border:
+    3px solid #ffd18b;
 
-    overflow: hidden !important;
+  box-shadow:
+    0 0 18px var(--orange);
+}
 
-    background: #000;
+
+
+/* =========================================================
+   INTRO VIDEO
+   ========================================================= */
+
+#introVideoContainer {
+  position:
+    fixed;
+
+  inset:
+    0;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  background:
+    black;
+
+  z-index:
+    10000;
+}
+
+
+#introVideo {
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    contain;
+}
+
+
+#introButtons {
+  position:
+    absolute;
+
+  left:
+    50%;
+
+  bottom:
+    7%;
+
+  transform:
+    translateX(-50%);
+
+  display:
+    flex;
+
+  gap:
+    12px;
+
+  width:
+    min(92%, 650px);
+}
+
+
+#introButtons button {
+  flex:
+    1;
+}
+
+
+/* =========================================================
+   LOADING SCREEN
+   ========================================================= */
+
+#loadingOverlay {
+  position:
+    fixed;
+
+  inset:
+    0;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  background:
+    var(--black);
+
+  color:
+    var(--orange-bright);
+
+  font-size:
+    40px;
+
+  z-index:
+    11000;
+}
+
+
+/* =========================================================
+   FIREWORKS
+   ========================================================= */
+
+#fireworksContainer {
+  position:
+    fixed;
+
+  inset:
+    0;
+
+  pointer-events:
+    none;
+
+  z-index:
+    9000;
+}
+
+
+.firework {
+  position:
+    absolute;
+
+  width:
+    10px;
+
+  height:
+    10px;
+
+  background:
+    var(--orange-bright);
+
+  box-shadow:
+    0 0 12px var(--orange-bright);
+
+  animation:
+    burst 0.5s ease-out forwards;
+}
+
+
+@keyframes burst {
+
+  to {
+    transform:
+      scale(8)
+      rotate(180deg);
+
+    opacity:
+      0;
   }
 
-  body.tv-fullscreen {
-    width: 100vw;
+}
 
-    height: 100vh;
 
-    max-height: 100vh;
+/* =========================================================
+   FULLSCREEN / TV MODE
+   ========================================================= */
 
-    margin: 0;
+body.tv-fullscreen {
+  width:
+    100vw;
 
-    padding: 0;
+  height:
+    100vh;
 
-    overflow: hidden !important;
+  min-height:
+    100vh;
 
-    background: #000;
+  max-height:
+    100vh;
 
-    display: flex;
+  margin:
+    0;
 
-    flex-direction: column;
-  }
+  padding:
+    0;
 
+  overflow:
+    hidden !important;
 
-  /* ---------------- FULLSCREEN HEADER ---------------- */
+  display:
+    flex;
 
-  body.tv-fullscreen header {
-    flex: 0 0 13vh;
+  flex-direction:
+    column;
 
-    height: 13vh;
+  background:
+    #050208;
+}
 
-    min-height: 0;
 
-    margin: 0;
+/* =========================================================
+   FULLSCREEN TOP SCENERY
+   ========================================================= */
 
-    padding:
-      0
-      1vw;
-  }
+body.tv-fullscreen .halloween-scenery {
+  flex:
+    0 0 82px !important;
 
-  body.tv-fullscreen #headerContent {
-    height: 100%;
+  width:
+    100% !important;
 
-    flex-direction: row;
+  height:
+    82px !important;
 
-    flex-wrap: nowrap;
+  min-height:
+    82px !important;
 
-    align-items: center;
-  }
+  max-height:
+    82px !important;
 
-  body.tv-fullscreen #headerPhoto {
-    height: 10.8vh;
+  background-size:
+    100% auto !important;
 
-    width: auto;
+  background-position:
+    center top !important;
 
-    max-width: 9vw;
+  background-repeat:
+    no-repeat !important;
+}
 
-    object-fit: cover;
 
-    border-width: 4px;
-  }
+/* =========================================================
+   FULLSCREEN HEADER
+   ========================================================= */
 
-  body.tv-fullscreen #headerTitles {
-    flex: 1;
-  }
+body.tv-fullscreen header {
+  flex:
+    0 0 88px !important;
 
-  body.tv-fullscreen #headerTitles h1 {
-    margin: 0;
+  width:
+    calc(100% - 20px) !important;
 
-    line-height: 1;
+  height:
+    88px !important;
 
-    font-size:
-      clamp(
-        24px,
-        2.35vw,
-        42px
-      );
-  }
+  min-height:
+    88px !important;
 
-  body.tv-fullscreen #headerButtons {
-    position: static;
+  max-height:
+    88px !important;
 
-    display: flex;
+  margin:
+    5px auto !important;
+}
 
-    flex-direction: column;
 
-    align-items: flex-end;
-  }
+body.tv-fullscreen #headerContent {
+  width:
+    100% !important;
 
+  height:
+    88px !important;
 
-  /* ---------------- FULLSCREEN MAIN ---------------- */
+  min-height:
+    88px !important;
 
-  body.tv-fullscreen main {
-    flex: 1;
+  max-height:
+    88px !important;
 
-    min-height: 0;
+  display:
+    grid !important;
 
-    max-width: none;
+  /*
+     Two columns only.
+     No person-photo column.
+  */
 
-    width: 100%;
+  grid-template-columns:
+    minmax(0, 1fr)
+    150px !important;
 
-    height: 87vh;
+  align-items:
+    center !important;
 
-    display: grid;
+  gap:
+    8px !important;
 
-    grid-template-columns:
-      minmax(0, 1fr)
-      minmax(245px, 22vw);
+  padding:
+    4px 9px !important;
 
-    gap: 0.8vw;
+  border-width:
+    3px !important;
 
-    margin: 0;
+  border-radius:
+    15px !important;
 
-    padding:
-      0.6vh
-      0.7vw;
+  overflow:
+    hidden !important;
+}
 
-    overflow: hidden !important;
-  }
 
+/* =========================================================
+   FULLSCREEN TITLE
+   ========================================================= */
 
-  /* ---------------- FULLSCREEN CASE AREA ---------------- */
+body.tv-fullscreen #headerTitles {
+  grid-column:
+    1 !important;
 
-  body.tv-fullscreen #briefcasesSection {
-    min-width: 0;
+  height:
+    100% !important;
 
-    min-height: 0;
+  display:
+    flex !important;
 
-    width: 100%;
+  flex-direction:
+    column !important;
 
-    height: 100%;
+  align-items:
+    center !important;
 
-    margin: 0;
+  justify-content:
+    center !important;
 
-    padding: 0;
+  overflow:
+    visible !important;
+}
 
-    display: flex;
 
-    flex-direction: column;
+body.tv-fullscreen #headerTitles h1 {
+  margin:
+    0 !important;
 
-    overflow: hidden !important;
-  }
+  gap:
+    7px !important;
 
+  white-space:
+    nowrap !important;
 
-  /* ---------------- FULLSCREEN GRID ---------------- */
+  font-size:
+    clamp(34px, 4.2vw, 62px) !important;
 
-  body.tv-fullscreen #briefcasesContainer {
-    flex: 1;
+  line-height:
+    0.9 !important;
+}
 
-    min-height: 0;
 
-    display: grid;
+body.tv-fullscreen .or-title {
+  font-size:
+    0.55em !important;
+}
 
-    grid-template-columns:
-      repeat(
-        7,
-        minmax(0, 1fr)
-      );
 
-    grid-template-rows:
-      repeat(
-        3,
-        minmax(0, 1fr)
-      );
+body.tv-fullscreen .halloween-subtitle {
+  position:
+    relative !important;
 
-    gap:
-      clamp(
-        3px,
-        0.45vw,
-        8px
-      );
+  margin:
+    3px 0 0 !important;
 
-    width: 100%;
+  font-size:
+    13px !important;
 
-    height: 100%;
+  line-height:
+    1 !important;
 
-    margin: 0;
+  overflow:
+    visible !important;
+}
 
-    padding: 0;
 
-    overflow: hidden !important;
-  }
+/* =========================================================
+   FULLSCREEN HEADER BUTTONS
+   ========================================================= */
 
+body.tv-fullscreen #headerButtons {
+  grid-column:
+    2 !important;
 
-  /* ---------------- FULLSCREEN CASES ---------------- */
+  display:
+    flex !important;
 
-  body.tv-fullscreen
-  .briefcase:not(.center-open):not(.personal-box-reveal) {
+  flex-direction:
+    column !important;
 
-    min-width: 0;
+  gap:
+    3px !important;
+}
 
-    min-height: 0;
 
-    width: 100%;
+body.tv-fullscreen #headerButtons button {
+  padding:
+    2px 4px !important;
 
-    height: 100%;
+  font-size:
+    9px !important;
 
-    margin: 0;
+  border-width:
+    2px !important;
 
-    padding: 2px;
+  border-radius:
+    6px !important;
+}
 
-    display: flex;
 
-    flex-direction: column;
+/* =========================================================
+   FULLSCREEN MAIN AREA
+   ========================================================= */
 
-    align-items: center;
+body.tv-fullscreen main {
+  flex:
+    1 1 0 !important;
 
-    overflow: hidden;
-  }
+  width:
+    calc(100% - 20px) !important;
 
-  body.tv-fullscreen
-  .briefcase:not(.center-open):not(.personal-box-reveal)
-  .briefcase-img {
+  height:
+    auto !important;
 
-    width: 100%;
+  min-height:
+    0 !important;
+
+  margin:
+    0 auto !important;
+
+  gap:
+    7px !important;
+
+  overflow:
+    hidden !important;
+}
+
+
+/* =========================================================
+   FULLSCREEN LEFT PANEL
+   ========================================================= */
+
+body.tv-fullscreen #briefcasesSection {
+  min-height:
+    0 !important;
+
+  padding:
+    7px 9px 5px !important;
+
+  border-width:
+    3px !important;
+
+  border-radius:
+    14px !important;
+
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(5, 1, 8, 0.22) 0%,
+      rgba(5, 1, 8, 0.38) 55%,
+      rgba(5, 1, 8, 0.50) 100%
+    ),
+    url("images/halloween-background.webp") !important;
+
+  background-size:
+    cover,
+    cover !important;
+
+  background-position:
+    center,
+    center 55% !important;
+
+  overflow:
+    hidden !important;
+}
+
+
+/* =========================================================
+   FULLSCREEN PHOTO GRID
+   ========================================================= */
+
+body.tv-fullscreen #briefcasesContainer {
+  flex:
+    1 1 auto !important;
+
+  min-height:
+    0 !important;
+
+  display:
+    grid !important;
+
+  grid-template-columns:
+    repeat(6, minmax(0, 1fr)) !important;
+
+  grid-template-rows:
+    repeat(3, minmax(0, 1fr)) !important;
+
+  gap:
+    6px 7px !important;
+
+  align-items:
+    center !important;
+
+  align-content:
+    center !important;
+
+  justify-items:
+    center !important;
+
+  padding:
+    8px 3px 10px !important;
+
+  overflow:
+    hidden !important;
+}
+
+
+body.tv-fullscreen .briefcase {
+  width:
+    auto !important;
+
+  height:
+    min(100%, 90px) !important;
+
+  max-width:
+    95px !important;
+
+  max-height:
+    90px !important;
+
+  aspect-ratio:
+    1 / 0.96 !important;
+
+  padding:
+    4px !important;
+
+  border-width:
+    3px !important;
+}
+
+
+body.tv-fullscreen .briefcase::before {
+  height:
+    8px !important;
+
+  top:
+    -11px !important;
+
+  border-width:
+    3px !important;
+}
+
+
+body.tv-fullscreen .briefcase-number {
+  bottom:
+    -10px !important;
+
+  min-width:
+    27px !important;
+
+  padding:
+    1px 4px !important;
+
+  font-size:
+    9px !important;
+
+  border-width:
+    1px !important;
+}
+
+
+/* =========================================================
+   FULLSCREEN WOOD SIGN
+   ========================================================= */
+
+body.tv-fullscreen #briefcasesInfo {
+  flex:
+    0 0 38px !important;
+
+  width:
+    88% !important;
+
+  height:
+    38px !important;
+
+  min-height:
+    38px !important;
+
+  margin:
+    2px auto 3px !important;
+
+  padding:
+    3px 28px !important;
+
+  border-width:
+    3px !important;
+
+  position:
+    relative !important;
+
+  z-index:
+    6 !important;
+}
+
+
+body.tv-fullscreen #gameMessage {
+  font-size:
+    14px !important;
+
+  line-height:
+    1 !important;
+}
+
+
+body.tv-fullscreen .message-pumpkin {
+  font-size:
+    17px !important;
+}
+
+
+/* =========================================================
+   FULLSCREEN RIGHT PANEL
+   ========================================================= */
+
+body.tv-fullscreen #prizesSection {
+  min-height:
+    0 !important;
+
+  padding:
+    5px 7px !important;
+
+  border-width:
+    3px !important;
+
+  border-radius:
+    14px !important;
+
+  overflow:
+    hidden !important;
+}
+
+
+body.tv-fullscreen .tricks-title {
+  margin-bottom:
+    3px !important;
+
+  font-size:
+    24px !important;
+
+  line-height:
+    1 !important;
+}
+
+
+body.tv-fullscreen #prizeBoard {
+  gap:
+    4px !important;
+}
+
+
+body.tv-fullscreen .prize-column {
+  gap:
+    2px !important;
+}
+
+
+body.tv-fullscreen .prize-column li {
+  min-height:
+    15px !important;
+
+  padding:
+    1px 4px !important;
+
+  font-size:
+    8px !important;
+
+  border-width:
+    1px !important;
+}
+
+
+body.tv-fullscreen .prize-pumpkin {
+  font-size:
+    11px !important;
+}
+
+
+body.tv-fullscreen .spooky-divider {
+  margin:
+    3px 0 1px !important;
+}
+
+
+body.tv-fullscreen .offers-title {
+  margin:
+    1px 0 3px !important;
+
+  font-size:
+    14px !important;
+}
+
+
+body.tv-fullscreen #offersHistory {
+  min-height:
+    25px !important;
+
+  max-height:
+    30px !important;
+
+  padding:
+    2px 4px !important;
+}
+
+
+body.tv-fullscreen #offersHistory li {
+  padding:
+    1px 3px !important;
+
+  font-size:
+    9px !important;
+}
+
+
+/* =========================================================
+   FULLSCREEN BOTTOM HALLOWEEN ART
+   ========================================================= */
+
+body.tv-fullscreen .bottom-scene {
+  position:
+    relative !important;
+
+  z-index:
+    2 !important;
+
+  display:
+    block !important;
+
+  flex:
+    0 0 118px !important;
+
+  width:
+    100% !important;
+
+  height:
+    118px !important;
+
+  min-height:
+    118px !important;
+
+  max-height:
+    118px !important;
+
+  margin:
+    0 !important;
+
+  background-image:
+    url("images/bottom-halloween-strip.webp") !important;
+
+  background-size:
+    108% auto !important;
+
+  background-position:
+    center bottom !important;
+
+  background-repeat:
+    no-repeat !important;
+
+  pointer-events:
+    none !important;
+
+  overflow:
+    hidden !important;
+
+  filter:
+    saturate(1.1)
+    contrast(1.05);
+}
+
+
+body.tv-fullscreen .bottom-scene::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    0;
+
+  left:
+    0;
+
+  right:
+    0;
+
+  height:
+    16px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255, 114, 0, 0.28),
+      transparent
+    );
+
+  pointer-events:
+    none;
+}
+
+
+
+/* =========================================================
+   SHORT FULLSCREEN MONITORS
+   ========================================================= */
+
+@media
+  (min-width: 701px)
+  and
+  (max-height: 900px) {
+
+  body.tv-fullscreen .halloween-scenery {
+    flex-basis:
+      78px !important;
 
     height:
-      calc(100% - 25px);
+      78px !important;
 
-    min-height: 0;
+    min-height:
+      78px !important;
 
-    aspect-ratio: auto;
-
-    object-fit: cover;
-
-    object-position: center top;
+    max-height:
+      78px !important;
   }
 
-  body.tv-fullscreen
-  .briefcase:not(.center-open):not(.personal-box-reveal)
-  .briefcase-number {
 
-    width: 100%;
+  body.tv-fullscreen header {
+    flex-basis:
+      88px !important;
 
+    height:
+      88px !important;
+
+    min-height:
+      88px !important;
+
+    max-height:
+      88px !important;
+  }
+
+
+  body.tv-fullscreen #headerContent {
+    height:
+      88px !important;
+
+    min-height:
+      88px !important;
+
+    max-height:
+      88px !important;
+  }
+
+
+  body.tv-fullscreen #headerTitles h1 {
     font-size:
-      clamp(
-        12px,
-        1.05vw,
-        20px
-      );
-
-    padding: 2px;
+      clamp(32px, 4vw, 56px) !important;
   }
 
 
-  /* ---------------- PERSONAL GRID CASE ---------------- */
-
-  body.tv-fullscreen .briefcase.personal {
-    border:
-      5px solid #ffd700 !important;
-
-    transform:
-      scale(1.04) !important;
-
-    z-index: 20;
-
-    animation:
-      pulseHighlight
-      1.3s
-      infinite;
+  body.tv-fullscreen .halloween-subtitle {
+    font-size:
+      12px !important;
   }
 
-
-  /* ---------------- GAME MESSAGE ---------------- */
 
   body.tv-fullscreen #briefcasesInfo {
-    flex:
-      0 0 5.5vh;
+    flex-basis:
+      36px !important;
 
-    height: 5.5vh;
+    height:
+      36px !important;
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    margin: 0;
-
-    padding: 0;
+    min-height:
+      36px !important;
   }
+
+
+  body.tv-fullscreen .bottom-scene {
+    flex:
+      0 0 110px !important;
+
+    height:
+      110px !important;
+
+    min-height:
+      110px !important;
+
+    max-height:
+      110px !important;
+
+    background-size:
+      108% auto !important;
+
+    background-position:
+      center bottom !important;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SHORT FULLSCREEN
+   ========================================================= */
+
+@media
+  (min-width: 701px)
+  and
+  (max-height: 760px) {
+
+  body.tv-fullscreen .halloween-scenery {
+    flex-basis:
+      65px !important;
+
+    height:
+      65px !important;
+
+    min-height:
+      65px !important;
+
+    max-height:
+      65px !important;
+  }
+
+
+  body.tv-fullscreen header {
+    flex-basis:
+      78px !important;
+
+    height:
+      78px !important;
+
+    min-height:
+      78px !important;
+
+    max-height:
+      78px !important;
+
+    margin:
+      3px auto !important;
+  }
+
+
+  body.tv-fullscreen #headerContent {
+    height:
+      78px !important;
+
+    min-height:
+      78px !important;
+
+    max-height:
+      78px !important;
+  }
+
+
+  body.tv-fullscreen #headerTitles h1 {
+    font-size:
+      clamp(28px, 3.7vw, 48px) !important;
+  }
+
+
+  body.tv-fullscreen .halloween-subtitle {
+    margin-top:
+      2px !important;
+
+    font-size:
+      10px !important;
+  }
+
+
+  body.tv-fullscreen .briefcase {
+    height:
+      min(100%, 78px) !important;
+
+    max-width:
+      84px !important;
+
+    max-height:
+      78px !important;
+  }
+
+
+  body.tv-fullscreen #briefcasesContainer {
+    gap:
+      5px 6px !important;
+
+    padding:
+      6px 3px 8px !important;
+  }
+
+
+  body.tv-fullscreen #briefcasesInfo {
+    flex-basis:
+      32px !important;
+
+    height:
+      32px !important;
+
+    min-height:
+      32px !important;
+
+    margin:
+      1px auto 2px !important;
+  }
+
 
   body.tv-fullscreen #gameMessage {
     font-size:
-      clamp(
-        20px,
-        1.7vw,
-        30px
-      );
-
-    font-weight: 800;
-
-    color: #ffd700;
+      12px !important;
   }
 
 
-  /* ---------------- PRIZES ---------------- */
+  body.tv-fullscreen .bottom-scene {
+    flex:
+      0 0 90px !important;
 
-  body.tv-fullscreen #prizesSection {
-    min-width: 0;
+    height:
+      90px !important;
 
-    min-height: 0;
+    min-height:
+      90px !important;
 
-    height: 100%;
+    max-height:
+      90px !important;
 
-    margin: 0;
+    background-size:
+      108% auto !important;
 
-    padding:
-      0.5vh
-      0.6vw;
-
-    border-left:
-      3px solid #d4af37;
-
-    overflow: hidden !important;
+    background-position:
+      center bottom !important;
   }
 
-  body.tv-fullscreen #prizesSection h2 {
-    font-size:
-      clamp(
-        20px,
-        1.7vw,
-        30px
-      );
-
-    margin:
-      0.5vh
-      0
-      0.8vh;
-
-    color: #ffd700;
-
-    font-weight: 900;
-
-    text-shadow:
-      0 0 10px
-      rgba(255, 215, 0, 0.8);
-  }
-
-  body.tv-fullscreen #prizeBoard {
-    display: grid;
-
-    grid-template-columns:
-      1fr
-      1fr;
-
-    gap:
-      0.1vh
-      0.7vw;
-  }
-
-  body.tv-fullscreen #prizeBoard li {
-    font-size:
-      clamp(
-        14px,
-        1.15vw,
-        21px
-      );
-
-    line-height: 1.15;
-
-    font-weight: 700;
-
-    margin:
-      0.18vh
-      0;
-
-    color: #ffd700;
-  }
-
-  body.tv-fullscreen #prizeBoard li.eliminated {
-    color: #666;
-  }
-
-  body.tv-fullscreen #offersHistory li {
-    font-size:
-      clamp(
-        12px,
-        0.95vw,
-        18px
-      );
-
-    line-height: 1.15;
-
-    margin:
-      0.2vh
-      0;
-  }
-
-
-  /* ---------------- FULLSCREEN MODAL ---------------- */
-
-  body.tv-fullscreen .modal-content {
-    max-width: 55vw;
-
-    max-height: 75vh;
-
-    padding:
-      clamp(
-        15px,
-        2vw,
-        35px
-      );
-  }
 }
 
 
-/* ======================================================
-   CENTERED REVEAL
-   DESKTOP AND PHONE
-   ====================================================== */
+/* =========================================================
+   TALL FULLSCREEN MONITORS
+   ========================================================= */
+
+@media
+  (min-width: 701px)
+  and
+  (min-height: 901px) {
+
+  body.tv-fullscreen .halloween-scenery {
+    flex-basis:
+      105px !important;
+
+    height:
+      105px !important;
+
+    min-height:
+      105px !important;
+
+    max-height:
+      105px !important;
+  }
+
+
+  body.tv-fullscreen header {
+    flex-basis:
+      100px !important;
+
+    height:
+      100px !important;
+
+    min-height:
+      100px !important;
+
+    max-height:
+      100px !important;
+  }
+
+
+  body.tv-fullscreen #headerContent {
+    height:
+      100px !important;
+
+    min-height:
+      100px !important;
+
+    max-height:
+      100px !important;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      170px !important;
+  }
+
+
+  body.tv-fullscreen #headerTitles h1 {
+    font-size:
+      clamp(38px, 4.6vw, 68px) !important;
+  }
+
+
+  body.tv-fullscreen .halloween-subtitle {
+    font-size:
+      15px !important;
+  }
+
+
+  body.tv-fullscreen #headerButtons button {
+    padding:
+      3px 5px !important;
+
+    font-size:
+      10px !important;
+  }
+
+
+  body.tv-fullscreen #briefcasesContainer {
+    gap:
+      9px 9px !important;
+
+    padding:
+      9px 3px 11px !important;
+  }
+
+
+  body.tv-fullscreen .briefcase {
+    height:
+      min(100%, 102px) !important;
+
+    max-width:
+      108px !important;
+
+    max-height:
+      102px !important;
+  }
+
+
+  body.tv-fullscreen #briefcasesInfo {
+    flex-basis:
+      42px !important;
+
+    height:
+      42px !important;
+
+    min-height:
+      42px !important;
+  }
+
+
+  body.tv-fullscreen #gameMessage {
+    font-size:
+      16px !important;
+  }
+
+
+  body.tv-fullscreen .tricks-title {
+    font-size:
+      28px !important;
+  }
+
+
+  body.tv-fullscreen .prize-column li {
+    min-height:
+      18px !important;
+
+    font-size:
+      9px !important;
+  }
+
+
+  body.tv-fullscreen .offers-title {
+    font-size:
+      16px !important;
+  }
+
+
+  body.tv-fullscreen #offersHistory {
+    min-height:
+      31px !important;
+
+    max-height:
+      40px !important;
+  }
+
+
+  body.tv-fullscreen .bottom-scene {
+    flex:
+      0 0 135px !important;
+
+    height:
+      135px !important;
+
+    min-height:
+      135px !important;
+
+    max-height:
+      135px !important;
+
+    background-size:
+      106% auto !important;
+
+    background-position:
+      center bottom !important;
+  }
+
+}
+
+
+/* =========================================================
+   PHONE / TABLET
+   ========================================================= */
+
+@media
+  (max-width: 700px) {
+
+  .halloween-scenery {
+    height:
+      100px;
+
+    min-height:
+      100px;
+
+    background-size:
+      auto 140px;
+
+    background-position:
+      center top;
+  }
+
+
+  header,
+  main {
+    width:
+      calc(100% - 12px);
+  }
+
+
+  /*
+     Mobile header:
+     title on first row,
+     buttons on second row.
+  */
+
+  #headerContent {
+    min-height:
+      auto;
+
+    grid-template-columns:
+      1fr;
+
+    grid-template-rows:
+      auto
+      auto;
+
+    gap:
+      7px;
+
+    padding:
+      8px;
+  }
+
+
+  #headerTitles {
+    grid-column:
+      1;
+
+    grid-row:
+      1;
+  }
+
+
+  #headerTitles h1 {
+    gap:
+      4px;
+
+    font-size:
+      clamp(28px, 9vw, 44px);
+  }
+
+
+  .halloween-subtitle {
+    margin-top:
+      3px;
+
+    font-size:
+      clamp(13px, 4vw, 18px);
+  }
+
+
+  #headerButtons {
+    grid-column:
+      1;
+
+    grid-row:
+      2;
+
+    display:
+      grid;
+
+    grid-template-columns:
+      repeat(3, 1fr);
+
+    gap:
+      4px;
+  }
+
+
+  #headerButtons button {
+    padding:
+      6px 2px;
+
+    font-size:
+      10px;
+  }
+
+
+  main {
+    display:
+      block;
+  }
+
+
+  #briefcasesSection {
+    padding:
+      18px 8px 10px;
+
+    background-position:
+      center,
+      center center;
+  }
+
+
+  #briefcasesContainer {
+    grid-template-columns:
+      repeat(3, 1fr);
+
+    gap:
+      22px 9px;
+  }
+
+
+  .briefcase {
+    width:
+      min(100%, 100px);
+
+    padding:
+      4px;
+
+    border-width:
+      3px;
+  }
+
+
+  #briefcasesInfo {
+    width:
+      96%;
+
+    padding:
+      8px 10px;
+  }
+
+
+  .message-pumpkin {
+    display:
+      none;
+  }
+
+
+  #prizesSection {
+    margin-top:
+      8px;
+  }
+
+
+  .bottom-scene {
+    height:
+      110px;
+
+    min-height:
+      110px;
+
+    margin-top:
+      0;
+
+    background-size:
+      auto 115px;
+
+    background-position:
+      center bottom;
+  }
+
+
+  #introButtons {
+    flex-direction:
+      column;
+  }
+
+
+  .center-open {
+    width:
+      min(270px, 82vw) !important;
+  }
+
+
+  .personal-box-message,
+  .center-amount {
+    font-size:
+      clamp(22px, 8vw, 34px) !important;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONE
+   ========================================================= */
+
+@media
+  (max-width: 430px) {
+
+  .halloween-scenery {
+    height:
+      90px;
+
+    min-height:
+      90px;
+
+    background-size:
+      auto 125px;
+  }
+
+
+  #headerTitles h1 {
+    font-size:
+      clamp(22px, 7.3vw, 32px);
+  }
+
+
+  #briefcasesContainer {
+    gap:
+      20px 6px;
+  }
+
+
+  .briefcase {
+    max-width:
+      90px;
+  }
+
+
+  .tricks-title {
+    font-size:
+      30px;
+  }
+
+
+  .bottom-scene {
+    height:
+      95px;
+
+    min-height:
+      95px;
+
+    margin-top:
+      0;
+
+    background-size:
+      auto 100px;
+
+    background-position:
+      center bottom;
+  }
+
+}
+/* =========================================================
+   PHOTO REVEAL OVERLAY
+   FINAL FIX
+
+   Used for:
+   1. "THIS IS YOUR PICK!" reveal
+   2. Dollar amount reveal when another photo is opened
+
+   IMPORTANT:
+   game.js appends these cloned cards directly to <body>.
+   These rules deliberately override the normal .briefcase
+   grid-card rules.
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   BASE REVEAL CARD
+   --------------------------------------------------------- */
 
 body > .center-open,
-body > .personal-box-reveal,
-body.tv-fullscreen > .center-open,
-body.tv-fullscreen > .personal-box-reveal {
+body.tv-fullscreen > .center-open {
 
   position: fixed !important;
 
-  inset: 0 !important;
+  /* Center on the entire screen */
+  top: 50% !important;
+  left: 50% !important;
 
-  top: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  left: 0 !important;
+  right: auto !important;
+  bottom: auto !important;
 
-  transform: none !important;
-  translate: none !important;
-  scale: none !important;
-  rotate: none !important;
+  transform:
+    translate(-50%, -50%) !important;
 
-  width: 100vw !important;
-
-  height: 100vh !important;
-
-  max-width: none !important;
-
-  max-height: none !important;
+  /* Remove normal grid-card dimensions */
+  width: 320px !important;
+  height: auto !important;
 
   min-width: 0 !important;
-
   min-height: 0 !important;
+
+  max-width: 72vw !important;
+  max-height: 76vh !important;
+
+  aspect-ratio: auto !important;
 
   margin: 0 !important;
 
-  padding: 0 !important;
+  padding:
+    10px !important;
 
-  border: 0 !important;
-
-  border-radius: 0 !important;
-
-  background:
-    rgba(0, 0, 0, 0.70) !important;
-
-  box-shadow: none !important;
-
-  opacity: 1 !important;
-
+  /* Reveal card layout */
   display: flex !important;
 
   flex-direction: column !important;
 
-  justify-content: center !important;
-
   align-items: center !important;
 
-  text-align: center !important;
+  justify-content: center !important;
 
-  overflow: hidden !important;
+  gap: 8px !important;
 
-  pointer-events: none !important;
+  /* Halloween styling */
+  background:
+    linear-gradient(
+      180deg,
+      #17051d 0%,
+      #08020b 100%
+    ) !important;
 
-  cursor: default !important;
+  border:
+    5px solid var(--orange) !important;
 
-  transition: none !important;
+  border-radius:
+    18px !important;
 
-  animation: none !important;
+  box-shadow:
+    0 0 12px var(--orange),
+    0 0 32px rgba(255, 114, 0, 0.90),
+    0 0 70px rgba(216, 23, 255, 0.50) !important;
 
-  z-index: 15000 !important;
+  opacity:
+    1 !important;
+
+  visibility:
+    visible !important;
+
+  filter:
+    none !important;
+
+  overflow:
+    visible !important;
+
+  cursor:
+    default !important;
+
+  pointer-events:
+    none !important;
+
+  z-index:
+    20000 !important;
 }
 
 
-/* ======================================================
-   NO REVEAL MOVEMENT ON HOVER
-   ====================================================== */
+/* ---------------------------------------------------------
+   REMOVE SUITCASE HANDLE FROM ENLARGED REVEAL
+   --------------------------------------------------------- */
 
-body > .center-open:hover,
-body > .personal-box-reveal:hover,
-body.tv-fullscreen > .center-open:hover,
-body.tv-fullscreen > .personal-box-reveal:hover {
+body > .center-open::before,
+body.tv-fullscreen > .center-open::before {
 
-  transform: none !important;
+  content: none !important;
 
-  translate: none !important;
-
-  scale: none !important;
-
-  rotate: none !important;
-
-  animation: none !important;
-
-  transition: none !important;
+  display: none !important;
 }
 
 
-/* ======================================================
-   CENTER REVEAL PHOTO
-   ====================================================== */
+/* ---------------------------------------------------------
+   HIDE ORIGINAL NUMBER BADGE ON CLONED CARD
+
+   game.js creates its own amount / pick number underneath.
+   --------------------------------------------------------- */
+
+body > .center-open > .briefcase-number,
+body.tv-fullscreen > .center-open > .briefcase-number {
+
+  display: none !important;
+}
+
+
+/* ---------------------------------------------------------
+   ENLARGED REVEAL PHOTO
+   --------------------------------------------------------- */
 
 body > .center-open > .center-img,
 body.tv-fullscreen > .center-open > .center-img {
@@ -1558,166 +3013,127 @@ body.tv-fullscreen > .center-open > .center-img {
 
   display: block !important;
 
-  width: auto !important;
+  flex:
+    0 0 auto !important;
 
-  height: auto !important;
+  width:
+    100% !important;
 
-  max-width:
-    min(
-      430px,
-      42vw
-    ) !important;
+  height:
+    auto !important;
 
-  max-height:
-    62vh !important;
+  min-width:
+    0 !important;
 
-  margin:
-    0 auto !important;
-
-  padding: 0 !important;
-
-  object-fit:
-    contain !important;
-
-  object-position:
-    center center !important;
-
-  border:
-    6px solid #ffd700 !important;
-
-  border-radius:
-    12px !important;
-
-  box-shadow:
-    0 0 20px #ffd700,
-    0 0 45px
-    rgba(255, 215, 0, 0.75) !important;
-
-  transform: none !important;
-
-  animation: none !important;
-}
-
-
-/* ======================================================
-   PERSONAL BOX REVEAL
-   ====================================================== */
-
-body > .personal-box-reveal > .center-img,
-body.tv-fullscreen > .personal-box-reveal > .center-img {
-
-  width: auto !important;
-
-  height: auto !important;
+  min-height:
+    0 !important;
 
   max-width:
-    min(
-      480px,
-      46vw
-    ) !important;
+    100% !important;
 
   max-height:
-    65vh !important;
+    48vh !important;
 
   margin:
-    0 auto !important;
-
-  object-fit:
-    contain !important;
-
-  border:
-    7px solid #ffd700 !important;
-
-  border-radius:
-    12px !important;
-
-  box-shadow:
-    0 0 25px #ffd700,
-    0 0 55px #ffd700,
-    0 0 75px
-    rgba(255, 215, 0, 0.55) !important;
-
-  transform: none !important;
-
-  animation: none !important;
-}
-
-
-/* ======================================================
-   REVEAL AMOUNT
-   ====================================================== */
-
-body > .center-open > .center-amount,
-body > .personal-box-reveal > .center-amount {
-
-  display: block !important;
-
-  width: auto !important;
-
-  margin:
-    10px
-    auto
     0 !important;
 
   padding:
-    8px
-    20px !important;
+    0 !important;
 
-  background:
-    #ffd700 !important;
+  object-fit:
+    contain !important;
 
-  color:
-    #000 !important;
+  border:
+    4px solid var(--orange) !important;
 
   border-radius:
-    8px !important;
+    11px !important;
 
-  font-size:
-    clamp(
-      24px,
-      2.5vw,
-      42px
-    ) !important;
+  box-shadow:
+    0 0 12px var(--orange),
+    0 0 26px rgba(255, 114, 0, 0.70) !important;
 
-  line-height: 1 !important;
+  opacity:
+    1 !important;
 
-  font-weight: 900 !important;
+  filter:
+    none !important;
 
-  white-space:
-    nowrap !important;
+  transform:
+    none !important;
 }
 
 
-/* ======================================================
-   THIS IS YOUR BOX
-   ====================================================== */
+/* =========================================================
+   NORMAL PHOTO REVEAL
+   Dollar amount shown underneath
+   ========================================================= */
 
-body > .personal-box-reveal > .personal-box-message {
+body > .center-open:not(.personal-box-reveal)
+  > .center-amount,
 
-  display: block !important;
+body.tv-fullscreen > .center-open:not(.personal-box-reveal)
+  > .center-amount {
 
-  width: auto !important;
+  position:
+    static !important;
+
+  display:
+    block !important;
+
+  flex:
+    0 0 auto !important;
+
+  width:
+    auto !important;
+
+  min-width:
+    170px !important;
+
+  max-width:
+    100% !important;
+
+  height:
+    auto !important;
 
   margin:
-    10px
-    auto
-    3px !important;
+    3px auto 0 !important;
 
-  padding: 0 !important;
+  padding:
+    7px 18px !important;
 
-  color:
-    #ffd700 !important;
-
-  font-size:
-    clamp(
-      30px,
-      3.4vw,
-      56px
+  background:
+    linear-gradient(
+      180deg,
+      #ffb323 0%,
+      #ff7200 100%
     ) !important;
 
-  line-height: 1 !important;
+  color:
+    #160700 !important;
 
-  font-weight: 900 !important;
+  border:
+    3px solid #ffe0a0 !important;
+
+  border-radius:
+    9px !important;
+
+  box-shadow:
+    0 0 10px var(--orange),
+    0 0 24px rgba(255, 114, 0, 0.75) !important;
+
+  font-family:
+    Impact,
+    Haettenschweiler,
+    "Arial Narrow Bold",
+    Arial,
+    sans-serif !important;
+
+  font-size:
+    clamp(27px, 3vw, 44px) !important;
+
+  line-height:
+    1 !important;
 
   text-align:
     center !important;
@@ -1725,626 +3141,340 @@ body > .personal-box-reveal > .personal-box-message {
   white-space:
     nowrap !important;
 
+  word-break:
+    normal !important;
+
+  overflow-wrap:
+    normal !important;
+
+  text-transform:
+    uppercase !important;
+
   text-shadow:
-    0 0 8px #000,
-    0 0 18px #ffd700 !important;
+    none !important;
+
+  transform:
+    none !important;
 }
 
 
-/* ======================================================
-   PHONE
-   IMPORTANT: THESE RULES COME AFTER FULLSCREEN
-   SO THE PHONE ALWAYS USES THE MOBILE LAYOUT.
-   ====================================================== */
+/* =========================================================
+   PLAYER'S SELECTED PICK
+   Green version
+   ========================================================= */
 
-@media (max-width: 430px) {
+body > .center-open.personal-box-reveal,
+body.tv-fullscreen > .center-open.personal-box-reveal {
 
-  html,
-  html:fullscreen {
-    width: 100% !important;
+  border-color:
+    var(--green) !important;
 
-    height: auto !important;
+  box-shadow:
+    0 0 12px var(--green),
+    0 0 34px rgba(98, 255, 0, 0.88),
+    0 0 70px rgba(216, 23, 255, 0.42) !important;
+}
 
-    min-height: 100% !important;
 
-    overflow-x: hidden !important;
+/* Player's selected photo */
 
-    overflow-y: auto !important;
+body > .personal-box-reveal > .center-img,
+body.tv-fullscreen > .personal-box-reveal > .center-img {
 
-    background: #000 !important;
-  }
+  border-color:
+    var(--green) !important;
 
-  body,
-  body.tv-fullscreen {
-    width: 100% !important;
+  box-shadow:
+    0 0 12px var(--green),
+    0 0 28px rgba(98, 255, 0, 0.75) !important;
+}
 
-    height: auto !important;
 
-    max-height: none !important;
+/* ---------------------------------------------------------
+   "THIS IS YOUR PICK!"
+   --------------------------------------------------------- */
 
-    min-height: 100vh !important;
+body > .personal-box-reveal > .personal-box-message,
+body.tv-fullscreen > .personal-box-reveal > .personal-box-message {
 
-    margin: 0 !important;
+  position:
+    static !important;
 
-    padding: 3px !important;
+  display:
+    block !important;
 
-    display: block !important;
+  flex:
+    0 0 auto !important;
 
-    overflow-x: hidden !important;
+  width:
+    100% !important;
 
-    overflow-y: auto !important;
+  min-width:
+    0 !important;
 
-    background: #000 !important;
-  }
+  max-width:
+    100% !important;
 
+  height:
+    auto !important;
 
-  /* ---------------- PHONE HEADER ---------------- */
+  margin:
+    4px 0 0 !important;
 
-  header,
-  body.tv-fullscreen header {
-    width: 100% !important;
+  padding:
+    0 5px !important;
 
-    height: auto !important;
+  background:
+    transparent !important;
 
-    min-height: 0 !important;
+  border:
+    0 !important;
 
-    margin-bottom: 4px !important;
+  color:
+    var(--green) !important;
 
-    padding-bottom: 4px !important;
-  }
+  font-family:
+    Impact,
+    Haettenschweiler,
+    "Arial Narrow Bold",
+    Arial,
+    sans-serif !important;
 
-  #headerContent,
-  body.tv-fullscreen #headerContent {
-    width: 100% !important;
+  font-size:
+    clamp(27px, 3vw, 42px) !important;
 
-    height: auto !important;
+  line-height:
+    1 !important;
 
-    display: flex !important;
+  text-align:
+    center !important;
 
-    flex-direction: column !important;
+  white-space:
+    nowrap !important;
 
-    flex-wrap: nowrap !important;
+  word-break:
+    keep-all !important;
 
-    align-items: center !important;
+  overflow-wrap:
+    normal !important;
 
-    justify-content: center !important;
-  }
+  text-transform:
+    uppercase !important;
 
-  #headerPhoto,
-  body.tv-fullscreen #headerPhoto {
-    width: 65px !important;
+  text-shadow:
+    0 0 7px #1c7200,
+    0 0 15px var(--green) !important;
 
-    height: auto !important;
+  transform:
+    none !important;
 
-    max-width: none !important;
+  writing-mode:
+    horizontal-tb !important;
+}
 
-    margin: 3px !important;
 
-    border-width: 3px !important;
-  }
+/* ---------------------------------------------------------
+   PICK NUMBER
+   --------------------------------------------------------- */
 
-  #headerTitles,
-  body.tv-fullscreen #headerTitles {
-    width: 100% !important;
-  }
+body > .personal-box-reveal > .center-amount,
+body.tv-fullscreen > .personal-box-reveal > .center-amount {
 
-  h1,
-  body.tv-fullscreen #headerTitles h1 {
-    font-size: 1.3em !important;
+  position:
+    static !important;
 
-    margin: 1px 0 !important;
+  display:
+    block !important;
 
-    line-height: 1.05 !important;
-  }
+  flex:
+    0 0 auto !important;
 
+  width:
+    auto !important;
 
-  /* ---------------- PHONE HEADER BUTTONS ---------------- */
+  min-width:
+    115px !important;
 
-  #headerButtons,
-  body.tv-fullscreen #headerButtons {
-    position: static !important;
+  max-width:
+    100% !important;
 
-    width: 100% !important;
+  height:
+    auto !important;
 
-    display: flex !important;
+  margin:
+    0 auto !important;
 
-    flex-direction: row !important;
+  padding:
+    5px 15px !important;
 
-    flex-wrap: wrap !important;
+  background:
+    linear-gradient(
+      180deg,
+      #8dff35,
+      #48dc00
+    ) !important;
 
-    justify-content: center !important;
+  color:
+    #0b2700 !important;
 
-    align-items: center !important;
+  border:
+    3px solid #d5ffad !important;
 
-    gap: 3px !important;
+  border-radius:
+    8px !important;
 
-    margin: 3px 0 !important;
-  }
+  box-shadow:
+    0 0 12px var(--green),
+    0 0 24px rgba(98, 255, 0, 0.60) !important;
 
-  #fullScreenBtn,
-  #watchIntroBtn {
-    font-size: 0.75em !important;
+  font-family:
+    Impact,
+    Haettenschweiler,
+    "Arial Narrow Bold",
+    Arial,
+    sans-serif !important;
 
-    padding:
-      5px
-      8px !important;
+  font-size:
+    clamp(20px, 2vw, 30px) !important;
 
-    margin: 2px !important;
-  }
+  line-height:
+    1 !important;
 
+  text-align:
+    center !important;
 
-  /* ---------------- PHONE MAIN ---------------- */
+  white-space:
+    nowrap !important;
 
-  main,
-  body.tv-fullscreen main {
-    width: 100% !important;
+  word-break:
+    normal !important;
 
-    height: auto !important;
+  overflow-wrap:
+    normal !important;
 
-    min-height: 0 !important;
+  text-transform:
+    uppercase !important;
 
-    max-width: none !important;
+  text-shadow:
+    none !important;
 
-    display: flex !important;
+  transform:
+    none !important;
+}
 
-    flex-direction: column !important;
 
-    align-items: center !important;
+/* =========================================================
+   FULLSCREEN REVEAL SIZE
 
-    gap: 0 !important;
+   Slightly larger because this is intended to be displayed
+   on a TV/projector.
+   ========================================================= */
 
-    margin: 0 !important;
+body.tv-fullscreen > .center-open {
 
-    padding: 0 !important;
+  width:
+    min(340px, 28vw) !important;
 
-    overflow: visible !important;
+  max-width:
+    min(340px, 72vw) !important;
 
-    background: #000 !important;
-  }
+  max-height:
+    72vh !important;
+}
 
 
-  /* ---------------- PHONE CASE SECTION ---------------- */
+body.tv-fullscreen > .center-open > .center-img {
 
-  #briefcasesSection,
-  body.tv-fullscreen #briefcasesSection {
-    width: 100% !important;
+  max-height:
+    43vh !important;
+}
 
-    height: auto !important;
 
-    min-height: 0 !important;
+/* =========================================================
+   DARK BACKDROP BEHIND REVEAL
 
-    margin: 0 !important;
+   Adds focus without covering the Halloween game completely.
+   ========================================================= */
 
-    padding: 4px !important;
+body.reveal-active::after {
 
-    overflow: visible !important;
+  content:
+    "";
 
-    background: #000 !important;
-  }
+  position:
+    fixed;
 
+  inset:
+    0;
 
-  /* ---------------- PHONE 3-COLUMN GRID ---------------- */
+  background:
+    rgba(0, 0, 0, 0.42);
 
-  #briefcasesContainer,
-  body.tv-fullscreen #briefcasesContainer {
-    width: 100% !important;
+  pointer-events:
+    none;
 
-    height: auto !important;
+  z-index:
+    19000;
+}
 
-    min-height: 0 !important;
 
-    display: grid !important;
+/* =========================================================
+   MOBILE REVEALS
+   ========================================================= */
 
-    grid-template-columns:
-      repeat(
-        3,
-        minmax(0, 1fr)
-      ) !important;
-
-    grid-template-rows: none !important;
-
-    grid-auto-rows: auto !important;
-
-    justify-content: center !important;
-
-    align-items: start !important;
-
-    gap: 4px !important;
-
-    margin: 0 !important;
-
-    padding: 0 !important;
-
-    overflow: visible !important;
-  }
-
-
-  /* ---------------- PHONE CASES ---------------- */
-
-  .briefcase,
-  body.tv-fullscreen
-  .briefcase:not(.center-open):not(.personal-box-reveal) {
-
-    width: 100% !important;
-
-    height: auto !important;
-
-    min-width: 0 !important;
-
-    min-height: 0 !important;
-
-    margin: 0 !important;
-
-    padding: 1px !important;
-
-    border-width: 1px !important;
-
-    border-radius: 6px !important;
-  }
-
-  .briefcase-img,
-  body.tv-fullscreen
-  .briefcase:not(.center-open):not(.personal-box-reveal)
-  .briefcase-img {
-
-    display: block !important;
-
-    width: 100% !important;
-
-    height: auto !important;
-
-    aspect-ratio: 2 / 3 !important;
-
-    object-fit: cover !important;
-
-    object-position:
-      center top !important;
-  }
-
-  .briefcase-number,
-  body.tv-fullscreen
-  .briefcase:not(.center-open):not(.personal-box-reveal)
-  .briefcase-number {
-
-    width: 100% !important;
-
-    height: auto !important;
-
-    font-size: 0.72em !important;
-
-    line-height: 1 !important;
-
-    padding: 2px !important;
-
-    margin-top: 1px !important;
-  }
-
-
-  /* ---------------- PHONE PERSONAL BOX ---------------- */
-
-  .briefcase.personal,
-  body.tv-fullscreen .briefcase.personal {
-
-    border:
-      3px solid #ffd700 !important;
-
-    transform:
-      scale(1.03) !important;
-
-    z-index: 20;
-  }
-
-
-  /* ---------------- PHONE GAME MESSAGE ---------------- */
-
-  #briefcasesInfo,
-  body.tv-fullscreen #briefcasesInfo {
-
-    width: 100% !important;
-
-    height: auto !important;
-
-    min-height: 0 !important;
-
-    display: block !important;
-
-    margin-top: 6px !important;
-
-    padding: 3px 0 !important;
-
-    overflow: visible !important;
-  }
-
-  #gameMessage,
-  body.tv-fullscreen #gameMessage {
-
-    font-size: 1em !important;
-
-    line-height: 1.15 !important;
-
-    padding: 0 4px !important;
-  }
-
-
-  /* ---------------- PHONE PRIZES ---------------- */
-
-  #prizesSection,
-  body.tv-fullscreen #prizesSection {
-
-    width: 100% !important;
-
-    height: auto !important;
-
-    min-height: 0 !important;
-
-    max-width: none !important;
-
-    margin-top: 8px !important;
-
-    padding:
-      8px
-      3px
-      15px !important;
-
-    border-left: none !important;
-
-    border-top:
-      2px solid #d4af37 !important;
-
-    overflow: visible !important;
-  }
-
-  #prizesSection h2,
-  body.tv-fullscreen #prizesSection h2 {
-
-    font-size: 1.25em !important;
-
-    margin:
-      6px
-      0 !important;
-  }
-
-  #prizeBoard,
-  body.tv-fullscreen #prizeBoard {
-
-    display: grid !important;
-
-    grid-template-columns:
-      1fr
-      1fr !important;
-
-    gap:
-      1px
-      8px !important;
-  }
-
-  #prizeBoard li,
-  body.tv-fullscreen #prizeBoard li {
-
-    font-size: 0.88em !important;
-
-    line-height: 1.15 !important;
-
-    margin: 2px 0 !important;
-  }
-
-  #offersHistory,
-  body.tv-fullscreen #offersHistory {
-
-    width: 100% !important;
-
-    height: auto !important;
-  }
-
-  #offersHistory li,
-  body.tv-fullscreen #offersHistory li {
-
-    font-size: 0.85em !important;
-  }
-
-
-  /* ---------------- PHONE MODAL ---------------- */
-
-  .modal,
-  body.tv-fullscreen .modal {
-
-    width: 100vw !important;
-
-    height: 100vh !important;
-  }
-
-  .modal-content,
-  body.tv-fullscreen .modal-content {
-
-    width: 92% !important;
-
-    max-width: 92% !important;
-
-    max-height: 85vh !important;
-
-    padding:
-      15px
-      10px !important;
-  }
-
-  .cases-to-open {
-
-    font-size:
-      clamp(
-        22px,
-        7vw,
-        32px
-      ) !important;
-  }
-
-  .bank-offer {
-
-    font-size:
-      clamp(
-        28px,
-        9vw,
-        42px
-      ) !important;
-  }
-
-
-  /* ---------------- PHONE BIG REVEAL ---------------- */
+@media
+  (max-width: 700px) {
 
   body > .center-open,
-  body > .personal-box-reveal,
-  body.tv-fullscreen > .center-open,
-  body.tv-fullscreen > .personal-box-reveal {
+  body.tv-fullscreen > .center-open {
 
-    width: 100vw !important;
+    width:
+      min(290px, 82vw) !important;
 
-    height: 100vh !important;
+    max-width:
+      82vw !important;
 
-    position: fixed !important;
+    max-height:
+      72vh !important;
 
-    inset: 0 !important;
-
-    display: flex !important;
-
-    flex-direction: column !important;
-
-    justify-content: center !important;
-
-    align-items: center !important;
-
-    overflow: hidden !important;
+    padding:
+      8px !important;
   }
+
 
   body > .center-open > .center-img,
   body.tv-fullscreen > .center-open > .center-img {
 
-    width: auto !important;
-
-    height: auto !important;
-
-    max-width: 72vw !important;
-
-    max-height: 58vh !important;
+    max-height:
+      42vh !important;
   }
 
-  body > .personal-box-reveal > .center-img,
-  body.tv-fullscreen > .personal-box-reveal > .center-img {
 
-    width: auto !important;
+  body > .personal-box-reveal
+    > .personal-box-message,
 
-    height: auto !important;
-
-    max-width: 75vw !important;
-
-    max-height: 58vh !important;
-  }
-
-  body > .personal-box-reveal > .personal-box-message {
+  body.tv-fullscreen > .personal-box-reveal
+    > .personal-box-message {
 
     font-size:
-      clamp(
-        22px,
-        7vw,
-        32px
-      ) !important;
+      clamp(23px, 7vw, 34px) !important;
 
-    white-space: normal !important;
-
-    padding:
-      0
-      10px !important;
+    white-space:
+      nowrap !important;
   }
 
-  body > .center-open > .center-amount,
-  body > .personal-box-reveal > .center-amount {
+
+  body > .center-open:not(.personal-box-reveal)
+    > .center-amount,
+
+  body.tv-fullscreen > .center-open:not(.personal-box-reveal)
+    > .center-amount {
+
+    min-width:
+      145px !important;
 
     font-size:
-      clamp(
-        20px,
-        6vw,
-        30px
-      ) !important;
-
-    padding:
-      6px
-      14px !important;
+      clamp(25px, 8vw, 36px) !important;
   }
 
-
-  /* ---------------- PHONE INTRO ---------------- */
-
-  #introVideoContainer {
-
-    width: 100vw !important;
-
-    height: 100vh !important;
-  }
-
-  #introVideo {
-
-    width: 100% !important;
-
-    height: 100% !important;
-
-    object-fit: contain !important;
-
-    background: #000 !important;
-  }
-
-  #introButtons {
-
-    bottom: 20px !important;
-
-    width: 96% !important;
-
-    gap: 5px !important;
-
-    flex-wrap: wrap !important;
-  }
-
-  #introButtons button {
-
-    font-size: 0.8em !important;
-
-    padding:
-      7px
-      9px !important;
-
-    margin: 2px !important;
-  }
-}
-
-
-/* ======================================================
-   VERY SMALL PHONES
-   ====================================================== */
-
-@media (max-width: 350px) {
-
-  #briefcasesContainer,
-  body.tv-fullscreen #briefcasesContainer {
-
-    grid-template-columns:
-      repeat(
-        3,
-        minmax(0, 1fr)
-      ) !important;
-
-    gap: 3px !important;
-  }
-
-  .briefcase-number {
-
-    font-size: 0.66em !important;
-  }
-
-  #headerPhoto {
-
-    width: 58px !important;
-  }
-
-  h1,
-  body.tv-fullscreen #headerTitles h1 {
-
-    font-size: 1.15em !important;
-  }
 }

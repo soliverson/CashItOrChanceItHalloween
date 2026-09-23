@@ -1,5 +1,5 @@
 // Data Setup and Utility Functions
-const prizes = [0.01, 1, 5, 10, 25, 50, 75, 90, 100, 125, 130, 150, 175, 200, 225, 250, 300, 350, 400, 450, 500];
+const prizes = [1, 10, 25, 50, 75, 100, 125, 130, 150, 175, 200, 225, 250, 300, 350, 400, 450, 500];
 const boxes = Array.from({ length: 18 }, (_, i) => i + 1);
 let boxValues = {};
 function shuffle(array) {

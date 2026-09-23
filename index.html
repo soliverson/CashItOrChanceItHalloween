@@ -3,61 +3,154 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Cash It or Chance It | MadeToPlayGames</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Cash It or Chance It: Halloween Edition | MadeToPlayGames
+  </title>
 
   <meta
     name="description"
-    content="Cash It or Chance It - a personalized interactive party game by MadeToPlayGames."
+    content="Cash It or Chance It Halloween Edition - an interactive party game by MadeToPlayGames."
   >
 
-  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="styles.css">
+  <link
+    rel="icon"
+    href="images/favicon.ico"
+    type="image/x-icon"
+  >
+
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  >
 </head>
 
-<body>
 
-  <!-- Intro Video Container -->
+<body class="halloween-edition">
+
+
+  <!-- =====================================================
+       INTRO VIDEO
+       ===================================================== -->
+
   <div id="introVideoContainer">
 
-    <video id="introVideo" playsinline>
-      <source src="videos/intro.mp4" type="video/mp4">
-      Your browser does not support the video tag.
+    <video
+      id="introVideo"
+      playsinline
+    >
+      <source
+        src="videos/intro.mp4"
+        type="video/mp4"
+      >
     </video>
 
+
     <div id="introButtons">
-      <button id="introPlayButton">Play Intro</button>
-      <button id="introFullScreenButton">Full Screen</button>
-      <button id="skipIntroButton">Skip Intro</button>
+
+      <button id="introPlayButton">
+        Play Intro
+      </button>
+
+      <button id="introFullScreenButton">
+        Full Screen
+      </button>
+
+      <button id="skipIntroButton">
+        Skip Intro
+      </button>
+
     </div>
 
   </div>
 
 
-  <!-- Loading Overlay -->
-  <div id="loadingOverlay">Loading...</div>
+  <!-- =====================================================
+       LOADING SCREEN
+       ===================================================== -->
+
+  <div id="loadingOverlay">
+    Loading...
+  </div>
 
 
-  <!-- Header -->
+  <!-- =====================================================
+       TOP HALLOWEEN SCENERY
+       ===================================================== -->
+
+  <div
+    class="halloween-scenery"
+    aria-hidden="true"
+  ></div>
+
+
+  <!-- =====================================================
+       GAME HEADER
+       ===================================================== -->
+
   <header>
 
     <div id="headerContent">
 
-      <img
-        id="headerPhoto"
-        src="images/Susan.webp"
-        alt="Susan's 75th Birthday"
-        loading="lazy"
-      >
+
+      <!-- Decorative corner webs -->
+
+      <div
+        class="web-corner web-left"
+        aria-hidden="true"
+      ></div>
+
+      <div
+        class="web-corner web-right"
+        aria-hidden="true"
+      ></div>
+
+
+      <!-- Main game title -->
 
       <div id="headerTitles">
-        <h1>Susan's 75th</h1>
-        <h1>Cash It or Chance It</h1>
+
+        <h1>
+
+          <span class="cash-title">
+            Cash It
+          </span>
+
+          <span class="or-title">
+            or
+          </span>
+
+          <span class="chance-title">
+            Chance It
+          </span>
+
+        </h1>
+
+
+        <div class="halloween-subtitle">
+
+          <span aria-hidden="true">
+            🎃
+          </span>
+
+          Halloween Edition
+
+          <span aria-hidden="true">
+            🎃
+          </span>
+
+        </div>
+
       </div>
 
 
-      <!-- Header Buttons -->
+      <!-- Game controls -->
+
       <div id="headerButtons">
 
         <button
@@ -65,6 +158,10 @@
           onclick="toggleFullScreen()"
         >
           Full Screen
+        </button>
+
+        <button id="musicToggleBtn">
+          🔊 Music On
         </button>
 
         <button id="watchIntroBtn">
@@ -78,29 +175,88 @@
   </header>
 
 
-  <!-- Game -->
+  <!-- =====================================================
+       MAIN GAME
+       ===================================================== -->
+
   <main>
+
+
+    <!-- ===================================================
+         PHOTO PICKS
+         =================================================== -->
 
     <section id="briefcasesSection">
 
       <div id="briefcasesContainer"></div>
 
+
+      <!-- Wooden instruction sign -->
+
       <div id="briefcasesInfo">
+
+        <span
+          class="message-pumpkin"
+          aria-hidden="true"
+        >
+          🎃
+        </span>
+
+
         <p id="gameMessage">
-          Choose a photo to make your personal pick.
+          Choose a photo to make your pick.
         </p>
+
+
+        <span
+          class="message-pumpkin"
+          aria-hidden="true"
+        >
+          🎃
+        </span>
+
       </div>
 
     </section>
 
 
-    <!-- Prize Board -->
+    <!-- ===================================================
+         PRIZE BOARD
+         =================================================== -->
+
     <aside id="prizesSection">
 
-      <h2>Prizes</h2>
+      <h2 class="tricks-title">
+        Tricks &amp; Treats
+      </h2>
+
+
       <ul id="prizeBoard"></ul>
 
-      <h2>Previous Offers</h2>
+
+      <div
+        class="spooky-divider"
+        aria-hidden="true"
+      >
+
+        <span>
+          🕷️
+        </span>
+
+        <span></span>
+
+        <span>
+          🕸️
+        </span>
+
+      </div>
+
+
+      <h2 class="offers-title">
+        Previous Offers
+      </h2>
+
+
       <ul id="offersHistory"></ul>
 
     </aside>
@@ -108,11 +264,33 @@
   </main>
 
 
-  <!-- Fireworks -->
+  <!-- =====================================================
+       BOTTOM HALLOWEEN SCENERY
+       ===================================================== -->
+
+  <div
+    class="bottom-scene"
+    aria-hidden="true"
+  ></div>
+
+
+  <!-- =====================================================
+       FIREWORKS
+       ===================================================== -->
+
   <div id="fireworksContainer"></div>
 
 
-  <!-- Audio -->
+  <!-- =====================================================
+       AUDIO
+       ===================================================== -->
+
+  <audio
+    id="backgroundMusic"
+    src="audio/halloween-background.mp3"
+    preload="auto"
+    loop
+  ></audio>
 
   <audio
     id="clickSound"
@@ -151,18 +329,27 @@
   ></audio>
 
 
-  <!-- Offer Modal -->
+  <!-- =====================================================
+       OFFER MODAL
+       ===================================================== -->
 
-  <div id="offerModal" class="modal">
+  <div
+    id="offerModal"
+    class="modal"
+  >
 
     <div class="modal-content">
+
       <div id="offerDetails"></div>
+
     </div>
 
   </div>
 
 
-  <!-- Scripts -->
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
 
   <script defer src="scripts/data.js"></script>
   <script defer src="scripts/render.js"></script>
@@ -173,19 +360,31 @@
   <script defer src="scripts/intro.js"></script>
 
 
-  <script>
-    window.onload = function() {
+  <!-- =====================================================
+       INITIALIZE GAME
+       ===================================================== -->
 
-      document.getElementById("loadingOverlay").style.display =
-        "none";
+  <script>
+
+    window.addEventListener("load", () => {
+
+      const loading =
+        document.getElementById("loadingOverlay");
+
+      if (loading) {
+        loading.style.display = "none";
+      }
 
       renderBriefcases();
 
       updateSidePanels();
 
       showRoundModal(1);
-    };
+
+    });
+
   </script>
+
 
 </body>
 

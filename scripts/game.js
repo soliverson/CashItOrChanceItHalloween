@@ -1,4 +1,10 @@
 // ======================================================
+// CASH IT OR CHANCE IT
+// GAME LOGIC
+// ======================================================
+
+
+// ======================================================
 // GAME STATE / FLAGS
 // ======================================================
 
@@ -7,40 +13,137 @@ let declineHandled = false;
 
 
 // ======================================================
-// BRIEFCASE CLICK
+// REVEAL HELPERS
+// ======================================================
+
+/*
+  Adds the dark overlay behind an enlarged photo reveal.
+
+  The CSS uses:
+  body.reveal-active::after
+*/
+function startRevealBackdrop() {
+  document.body.classList.add("reveal-active");
+}
+
+
+/*
+  Removes the dark overlay.
+*/
+function stopRevealBackdrop() {
+  document.body.classList.remove("reveal-active");
+}
+
+
+/*
+  Smoothly removes an enlarged reveal.
+
+  This prevents the photo from simply disappearing abruptly.
+*/
+function removeReveal(clone, callback) {
+
+  if (!clone) {
+    stopRevealBackdrop();
+
+    if (callback) {
+      callback();
+    }
+
+    return;
+  }
+
+  clone.style.transition =
+    "opacity 0.35s ease, transform 0.35s ease";
+
+  clone.style.opacity = "0";
+
+  /*
+    Keep the centering transform while slightly shrinking
+    the reveal.
+  */
+  clone.style.transform =
+    "translate(-50%, -50%) scale(0.94)";
+
+  setTimeout(() => {
+
+    if (clone && clone.parentNode) {
+      clone.remove();
+    }
+
+    stopRevealBackdrop();
+
+    if (callback) {
+      callback();
+    }
+
+  }, 350);
+}
+
+
+// ======================================================
+// BRIEFCASE / PHOTO CLICK
 // ======================================================
 
 function briefcaseClicked(box) {
 
   // ------------------------------------------------------
-  // FIRST CLICK: Choose the player's personal pick
+  // FIRST CLICK: Choose the player's pick
   // ------------------------------------------------------
+
   if (!chosenBox) {
 
     chosenBox = box;
 
-    const casesToOpen = rounds[currentRound];
+    const casesToOpen =
+      rounds[currentRound];
 
-    // Update the board so the selected personal pick
-    // is highlighted immediately.
+
+    // Update the board immediately so the selected
+    // photo receives its green highlight.
     renderBriefcases();
+
     updateSidePanels();
 
-    // Prevent any other photos from being clicked
-    // while the personal-pick reveal is showing.
+
+    /*
+      Lock the board while the selected-pick reveal
+      is being displayed.
+    */
     offerActive = true;
 
+
     const briefcase =
-      document.getElementById("briefcase-" + box);
+      document.getElementById(
+        "briefcase-" + box
+      );
 
-    // Make a large clone of the chosen personal pick.
-    const clone = briefcase.cloneNode(true);
 
+    if (!briefcase) {
+      offerActive = false;
+      return;
+    }
+
+
+    // ------------------------------------------------------
+    // CREATE LARGE PLAYER-PICK REVEAL
+    // ------------------------------------------------------
+
+    const clone =
+      briefcase.cloneNode(true);
+
+
+    /*
+      Completely replace the clone contents.
+
+      This avoids carrying the original number badge
+      and other grid-card elements into the reveal.
+    */
     clone.innerHTML = `
+
       <img
         class="center-img"
         src="${boxImages[box]}"
-        alt="Personal Pick ${box}"
+        alt="Your Pick ${box}"
       >
 
       <div class="personal-box-message">
@@ -48,58 +151,154 @@ function briefcaseClicked(box) {
       </div>
 
       <div class="center-amount">
-        Pick #${box}
+        PICK #${box}
       </div>
+
     `;
 
-    clone.classList.add("center-open");
-    clone.classList.add("personal-box-reveal");
 
-    // Prevent the large reveal from reacting to mouse hover.
-    clone.style.pointerEvents = "none";
+    clone.classList.add(
+      "center-open",
+      "personal-box-reveal"
+    );
 
-    document.body.appendChild(clone);
+
+    /*
+      The enlarged reveal should never respond to
+      mouse hover or clicks.
+    */
+    clone.style.pointerEvents =
+      "none";
+
+
+    /*
+      Start hidden so we can fade it in smoothly.
+    */
+    clone.style.opacity =
+      "0";
+
+
+    document.body.appendChild(
+      clone
+    );
+
+
+    // Darken the game board.
+    startRevealBackdrop();
+
+
+    /*
+      Allow the browser to place the element first,
+      then fade it in.
+    */
+    requestAnimationFrame(() => {
+
+      clone.style.transition =
+        "opacity 0.3s ease";
+
+      clone.style.opacity =
+        "1";
+
+    });
 
 
     // ------------------------------------------------------
-    // Show personal pick reveal for 5 seconds
+    // SHOW PLAYER PICK FOR 5 SECONDS
     // ------------------------------------------------------
+
     setTimeout(() => {
 
-      clone.remove();
+      removeReveal(
+        clone,
+        () => {
 
-      // After the reveal, show the instruction popup.
-      document.getElementById("offerDetails").innerHTML = `
-        <p class="message">
-          Your personal pick is
-          <strong>#${box}</strong>
-        </p>
+          // ----------------------------------------------
+          // AFTER REVEAL: SHOW NEXT INSTRUCTION
+          // ----------------------------------------------
 
-        <p class="cases-to-open">
-          Now choose
-          <strong>${casesToOpen}</strong>
-          photo${casesToOpen === 1 ? "" : "s"} to reveal.
-        </p>
-      `;
-
-      document.getElementById("offerModal").style.display =
-        "flex";
+          const offerDetails =
+            document.getElementById(
+              "offerDetails"
+            );
 
 
-      // Keep this instruction visible for 6 seconds.
-      setTimeout(() => {
+          if (offerDetails) {
 
-        document.getElementById("offerModal").style.display =
-          "none";
+            offerDetails.innerHTML = `
 
-        document.getElementById("gameMessage").textContent =
-          `Choose ${casesToOpen} photo${casesToOpen === 1 ? "" : "s"} to reveal.`;
+              <p class="message">
+                Your pick is
+                <strong>#${box}</strong>
+              </p>
 
-        offerActive = false;
+              <p class="cases-to-open">
+                Now choose
+                <strong>${casesToOpen}</strong>
+                photo${casesToOpen === 1 ? "" : "s"}
+                to reveal.
+              </p>
 
-      }, 6000);
+            `;
+
+          }
+
+
+          const offerModal =
+            document.getElementById(
+              "offerModal"
+            );
+
+
+          if (offerModal) {
+
+            offerModal.style.display =
+              "flex";
+
+          }
+
+
+          // ----------------------------------------------
+          // KEEP INSTRUCTION UP FOR 6 SECONDS
+          // ----------------------------------------------
+
+          setTimeout(() => {
+
+            if (offerModal) {
+
+              offerModal.style.display =
+                "none";
+
+            }
+
+
+            const gameMessage =
+              document.getElementById(
+                "gameMessage"
+              );
+
+
+            if (gameMessage) {
+
+              gameMessage.textContent =
+                `Choose ${casesToOpen} photo${casesToOpen === 1 ? "" : "s"} to reveal.`;
+
+            }
+
+
+            /*
+              Unlock the board only after the instruction
+              popup has disappeared.
+            */
+            offerActive =
+              false;
+
+          }, 6000);
+
+        }
+      );
 
     }, 5000);
+
 
     return;
   }
@@ -109,15 +308,34 @@ function briefcaseClicked(box) {
   // NORMAL GAME PLAY
   // ------------------------------------------------------
 
-  // Don't allow the player's personal pick to be revealed.
-  if (box === chosenBox) return;
+  /*
+    Never allow the player's selected pick
+    to be revealed during normal rounds.
+  */
+  if (box === chosenBox) {
+    return;
+  }
 
-  // Don't allow an already-revealed photo to be selected again.
-  if (openedStatus[box]) return;
+
+  /*
+    Don't allow an already-revealed photo
+    to be selected again.
+  */
+  if (openedStatus[box]) {
+    return;
+  }
+
+
+  /*
+    Don't allow another photo to be clicked
+    while a reveal or offer is active.
+  */
+  if (offerActive) {
+    return;
+  }
+
 
   openBriefcase(box);
-
-  updateSidePanels();
 }
 
 
@@ -127,72 +345,156 @@ function briefcaseClicked(box) {
 
 function openBriefcase(box) {
 
-  openedStatus[box] = true;
+  /*
+    Immediately lock clicks while this photo
+    is being revealed.
+  */
+  offerActive = true;
+
+
+  openedStatus[box] =
+    true;
+
 
   const briefcase =
-    document.getElementById("briefcase-" + box);
+    document.getElementById(
+      "briefcase-" + box
+    );
 
-  const clone = briefcase.cloneNode(true);
+
+  if (!briefcase) {
+
+    offerActive =
+      false;
+
+    return;
+  }
+
+
+  // ------------------------------------------------------
+  // CREATE LARGE PHOTO REVEAL
+  // ------------------------------------------------------
+
+  const clone =
+    briefcase.cloneNode(true);
+
 
   clone.innerHTML = `
+
     <img
       class="center-img"
       src="${boxImages[box]}"
-      alt="Image ${box}"
+      alt="Photo ${box}"
     >
 
     <div class="center-amount">
-      $${boxValues[box].toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })}
+
+      $${boxValues[box].toLocaleString(
+        undefined,
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      )}
+
     </div>
+
   `;
 
-  clone.classList.add("center-open");
 
-  // Prevent hover from moving/glitching the large image.
-  clone.style.pointerEvents = "none";
+  clone.classList.add(
+    "center-open"
+  );
 
-  document.body.appendChild(clone);
+
+  clone.style.pointerEvents =
+    "none";
+
+
+  clone.style.opacity =
+    "0";
+
+
+  document.body.appendChild(
+    clone
+  );
+
+
+  // Darken the board.
+  startRevealBackdrop();
+
+
+  // Smooth reveal.
+  requestAnimationFrame(() => {
+
+    clone.style.transition =
+      "opacity 0.3s ease";
+
+    clone.style.opacity =
+      "1";
+
+  });
 
 
   // ------------------------------------------------------
-  // Remove prize value from remaining values
+  // REMOVE PRIZE VALUE FROM REMAINING VALUES
   // ------------------------------------------------------
 
   const idx =
-    valuesRemaining.indexOf(boxValues[box]);
+    valuesRemaining.indexOf(
+      boxValues[box]
+    );
+
 
   if (idx > -1) {
-    valuesRemaining.splice(idx, 1);
+
+    valuesRemaining.splice(
+      idx,
+      1
+    );
+
   }
 
 
   // Count revealed photo.
   openedCount++;
 
+
+  /*
+    Update the board behind the reveal.
+
+    The selected photo will now appear faded/opened
+    when the large reveal disappears.
+  */
   renderBriefcases();
+
   updateSidePanels();
 
 
   // ------------------------------------------------------
-  // Find unrevealed picks besides personal pick
+  // FIND UNREVEALED PICKS BESIDES PLAYER'S PICK
   // ------------------------------------------------------
 
-  const unopened = boxes.filter(
-    b => !openedStatus[b] && b !== chosenBox
-  );
+  const unopened =
+    boxes.filter(
+      b =>
+        !openedStatus[b] &&
+        b !== chosenBox
+    );
 
 
   // ------------------------------------------------------
-  // Update instructions after each revealed photo
+  // UPDATE INSTRUCTION TEXT
   // ------------------------------------------------------
 
-  if (currentRound < rounds.length) {
+  if (
+    currentRound <
+    rounds.length
+  ) {
 
     const casesNeeded =
       rounds[currentRound];
+
 
     const casesLeftThisRound =
       Math.max(
@@ -200,11 +502,26 @@ function openBriefcase(box) {
         0
       );
 
-    if (casesLeftThisRound > 0) {
 
-      document.getElementById("gameMessage").textContent =
-        `Choose ${casesLeftThisRound} more photo${casesLeftThisRound === 1 ? "" : "s"} to reveal.`;
+    if (
+      casesLeftThisRound > 0
+    ) {
+
+      const gameMessage =
+        document.getElementById(
+          "gameMessage"
+        );
+
+
+      if (gameMessage) {
+
+        gameMessage.textContent =
+          `Choose ${casesLeftThisRound} more photo${casesLeftThisRound === 1 ? "" : "s"} to reveal.`;
+
+      }
+
     }
+
   }
 
 
@@ -217,50 +534,109 @@ function openBriefcase(box) {
     !finalSwapActive
   ) {
 
+    /*
+      Keep the final revealed amount on screen long
+      enough for everyone to see it.
+    */
     setTimeout(() => {
-      finalSwap();
-    }, 500);
 
-    setTimeout(() => {
-      clone.remove();
-    }, 6000);
+      removeReveal(
+        clone,
+        () => {
+
+          finalSwap();
+
+        }
+      );
+
+    }, 5000);
+
 
     return;
   }
 
 
   // ------------------------------------------------------
-  // OFFER
+  // END OF ROUND -> OFFER
   // ------------------------------------------------------
 
   if (
-    currentRound < rounds.length &&
-    openedCount >= rounds[currentRound]
+    currentRound <
+      rounds.length &&
+    openedCount >=
+      rounds[currentRound]
   ) {
 
-    offerActive = true;
+    const gameMessage =
+      document.getElementById(
+        "gameMessage"
+      );
 
-    document.getElementById("gameMessage").textContent =
-      "Waiting for your offer...";
 
-    // Wait until the enlarged picture disappears.
+    if (gameMessage) {
+
+      gameMessage.textContent =
+        "Waiting for your offer...";
+
+    }
+
+
+    /*
+      Leave the final photo/value visible for five
+      seconds, then remove it and show the offer.
+    */
     setTimeout(() => {
 
-      playSound("offerSound");
+      removeReveal(
+        clone,
+        () => {
 
-      offerDeal();
+          playSound(
+            "offerSound"
+          );
 
-      // Reset revealed photo count for next round.
-      openedCount = 0;
 
-    }, 5500);
+          offerDeal();
+
+
+          /*
+            Reset revealed-photo count for the
+            next round.
+          */
+          openedCount =
+            0;
+
+        }
+      );
+
+    }, 5000);
+
+
+    return;
   }
 
 
-  // Remove large revealed-photo image after 5 seconds.
+  // ------------------------------------------------------
+  // NORMAL REVEAL WITH MORE PICKS LEFT THIS ROUND
+  // ------------------------------------------------------
+
   setTimeout(() => {
-    clone.remove();
+
+    removeReveal(
+      clone,
+      () => {
+
+        /*
+          Player may now select the next photo.
+        */
+        offerActive =
+          false;
+
+      }
+    );
+
   }, 5000);
+
 }
 
 
@@ -270,20 +646,33 @@ function openBriefcase(box) {
 
 function finalSwap() {
 
-  if (finalSwapActive) return;
+  if (finalSwapActive) {
+    return;
+  }
 
-  finalSwapActive = true;
-  offerActive = true;
 
-  stopSound("suspenseMusic");
+  finalSwapActive =
+    true;
+
+  offerActive =
+    true;
+
+
+  stopSound(
+    "suspenseMusic"
+  );
+
+  stopRevealBackdrop();
+
 
   const finalHTML = `
+
     <p class="message">
-      Final Decision
+      FINAL DECISION
     </p>
 
     <p class="message">
-      Do you want to keep your personal pick
+      Do you want to keep your pick
       or swap it with the last remaining pick?
     </p>
 
@@ -291,113 +680,205 @@ function finalSwap() {
       class="deal"
       onclick="keepBox()"
     >
-      Keep My Pick
+      KEEP MY PICK
     </button>
 
     <button
       class="decline"
       onclick="swapBox()"
     >
-      Swap My Pick
+      SWAP MY PICK
     </button>
+
   `;
 
-  document.getElementById("offerDetails").innerHTML =
-    finalHTML;
 
-  document.getElementById("offerModal").style.display =
-    "flex";
+  const offerDetails =
+    document.getElementById(
+      "offerDetails"
+    );
 
-  playSound("finalSwapMusic");
+
+  if (offerDetails) {
+
+    offerDetails.innerHTML =
+      finalHTML;
+
+  }
+
+
+  const offerModal =
+    document.getElementById(
+      "offerModal"
+    );
+
+
+  if (offerModal) {
+
+    offerModal.style.display =
+      "flex";
+
+  }
+
+
+  playSound(
+    "finalSwapMusic"
+  );
+
 }
 
 
 // ======================================================
-// KEEP PERSONAL PICK
+// KEEP PICK
 // ======================================================
 
 function keepBox() {
 
-  stopSound("suspenseMusic");
-  stopSound("finalSwapMusic");
+  stopSound(
+    "suspenseMusic"
+  );
+
+  stopSound(
+    "finalSwapMusic"
+  );
+
 
   const resultHTML = `
+
     <p class="message">
-      You kept your personal pick
-      (#${chosenBox}).
+      YOU KEPT PICK #${chosenBox}!
     </p>
 
     <p class="message">
-      It contains:
-      $${boxValues[chosenBox].toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })}
+      IT CONTAINS:
+    </p>
+
+    <p class="bank-offer">
+
+      $${boxValues[chosenBox].toLocaleString(
+        undefined,
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      )}
+
     </p>
 
     <button onclick="playAgain()">
-      Play Again
+      PLAY AGAIN
     </button>
+
   `;
 
-  document.getElementById("offerDetails").innerHTML =
+
+  document.getElementById(
+    "offerDetails"
+  ).innerHTML =
     resultHTML;
 
-  document
-    .querySelector(".modal-content")
-    .classList.add("result-modal");
 
-  playSound("applause");
+  document
+    .querySelector(
+      ".modal-content"
+    )
+    .classList.add(
+      "result-modal"
+    );
+
+
+  playSound(
+    "applause"
+  );
+
 
   launchFireworks();
+
 }
 
 
 // ======================================================
-// SWAP PERSONAL PICK
+// SWAP PICK
 // ======================================================
 
 function swapBox() {
 
-  stopSound("suspenseMusic");
-  stopSound("finalSwapMusic");
-
-  const unopened = boxes.filter(
-    b => !openedStatus[b] && b !== chosenBox
+  stopSound(
+    "suspenseMusic"
   );
 
-  const newBox = unopened[0];
+  stopSound(
+    "finalSwapMusic"
+  );
 
-  chosenBox = newBox;
+
+  const unopened =
+    boxes.filter(
+      b =>
+        !openedStatus[b] &&
+        b !== chosenBox
+    );
+
+
+  const newBox =
+    unopened[0];
+
+
+  chosenBox =
+    newBox;
+
 
   const resultHTML = `
+
     <p class="message">
-      You swapped your pick.
+      YOU SWAPPED YOUR PICK!
     </p>
 
     <p class="message">
-      Your new pick (#${chosenBox}) contains:
-      $${boxValues[chosenBox].toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })}
+      PICK #${chosenBox} CONTAINS:
+    </p>
+
+    <p class="bank-offer">
+
+      $${boxValues[chosenBox].toLocaleString(
+        undefined,
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      )}
+
     </p>
 
     <button onclick="playAgain()">
-      Play Again
+      PLAY AGAIN
     </button>
+
   `;
 
-  document.getElementById("offerDetails").innerHTML =
+
+  document.getElementById(
+    "offerDetails"
+  ).innerHTML =
     resultHTML;
 
-  document
-    .querySelector(".modal-content")
-    .classList.add("result-modal");
 
-  playSound("applause");
+  document
+    .querySelector(
+      ".modal-content"
+    )
+    .classList.add(
+      "result-modal"
+    );
+
+
+  playSound(
+    "applause"
+  );
+
 
   launchFireworks();
+
 }
 
 
@@ -406,11 +887,38 @@ function swapBox() {
 // ======================================================
 
 function getBankersOffer(values) {
-  const sum = values.reduce((acc, curr) => acc + curr, 0);
-  const average = sum / values.length;
 
-  // Offers become more generous as the game progresses.
+  /*
+    Safety check in case the array ever becomes empty.
+  */
+  if (
+    !values ||
+    values.length === 0
+  ) {
+
+    return 0;
+
+  }
+
+
+  const sum =
+    values.reduce(
+      (acc, curr) =>
+        acc + curr,
+      0
+    );
+
+
+  const average =
+    sum / values.length;
+
+
+  /*
+    Offers become more generous as the
+    game progresses.
+  */
   const offerPercentages = [
+
     0.35, // Round 1
     0.45, // Round 2
     0.55, // Round 3
@@ -420,26 +928,61 @@ function getBankersOffer(values) {
     0.90, // Round 7
     0.95, // Round 8
     1.00  // Final rounds
+
   ];
 
+
   const percentage =
-    offerPercentages[currentRound] ?? 1;
+    offerPercentages[
+      currentRound
+    ] ?? 1;
 
-  let offer = average * percentage;
 
-  // Keep early offers from becoming too large.
-  if (currentRound === 0) {
-    offer = Math.min(offer, 75);
+  let offer =
+    average *
+    percentage;
+
+
+  /*
+    Keep early offers from becoming too large.
+  */
+  if (
+    currentRound === 0
+  ) {
+
+    offer =
+      Math.min(
+        offer,
+        75
+      );
+
   }
 
-  if (currentRound === 1) {
-    offer = Math.min(offer, 100);
+
+  if (
+    currentRound === 1
+  ) {
+
+    offer =
+      Math.min(
+        offer,
+        100
+      );
+
   }
 
-  // Round to the nearest dollar for cleaner offers.
-  offer = Math.round(offer / 5) * 5;
+
+  /*
+    Round to nearest $5.
+  */
+  offer =
+    Math.round(
+      offer / 5
+    ) * 5;
+
 
   return offer;
+
 }
 
 
@@ -449,51 +992,85 @@ function getBankersOffer(values) {
 
 function offerDeal() {
 
-  const offer =
-    getBankersOffer(valuesRemaining);
+  /*
+    Keep board locked while offer is showing.
+  */
+  offerActive =
+    true;
 
-  offersHistory.push(offer);
+
+  stopRevealBackdrop();
+
+
+  const offer =
+    getBankersOffer(
+      valuesRemaining
+    );
+
+
+  offersHistory.push(
+    offer
+  );
+
 
   updateOffersHistory();
 
+
   const offerHTML = `
+
     <p class="message">
-      Your offer is:
+      YOUR OFFER IS:
     </p>
 
     <p class="bank-offer">
-      $${offer.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })}
+
+      $${offer.toLocaleString(
+        undefined,
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      )}
+
     </p>
 
     <p class="message">
-      Cash It or Chance It?
+      CASH IT OR CHANCE IT?
     </p>
 
     <button
       class="deal"
       onclick="acceptDeal(${offer})"
     >
-      Cash It
+      CASH IT
     </button>
 
     <button
       class="decline"
       onclick="declineDealModal()"
     >
-      Chance It
+      CHANCE IT
     </button>
+
   `;
 
-  document.getElementById("offerDetails").innerHTML =
+
+  document.getElementById(
+    "offerDetails"
+  ).innerHTML =
     offerHTML;
 
-  document.getElementById("offerModal").style.display =
+
+  document.getElementById(
+    "offerModal"
+  ).style.display =
     "flex";
 
-  playSound("suspenseMusic");
+
+  playSound(
+    "suspenseMusic"
+  );
+
 }
 
 
@@ -503,40 +1080,74 @@ function offerDeal() {
 
 function acceptDeal(offer) {
 
-  stopSound("suspenseMusic");
+  stopSound(
+    "suspenseMusic"
+  );
+
 
   const resultHTML = `
+
     <p class="message">
-      You cashed it for
-      $${offer.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })}!
+      YOU CASHED IT FOR
+    </p>
+
+    <p class="bank-offer">
+
+      $${offer.toLocaleString(
+        undefined,
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      )}!
+
     </p>
 
     <p class="message">
-      Your personal pick (#${chosenBox}) contained:
-      $${boxValues[chosenBox].toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })}
+      PICK #${chosenBox} CONTAINED:
+    </p>
+
+    <p class="bank-offer">
+
+      $${boxValues[chosenBox].toLocaleString(
+        undefined,
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      )}
+
     </p>
 
     <button onclick="playAgain()">
-      Play Again
+      PLAY AGAIN
     </button>
+
   `;
 
-  document.getElementById("offerDetails").innerHTML =
+
+  document.getElementById(
+    "offerDetails"
+  ).innerHTML =
     resultHTML;
 
-  document
-    .querySelector(".modal-content")
-    .classList.add("result-modal");
 
-  playSound("applause");
+  document
+    .querySelector(
+      ".modal-content"
+    )
+    .classList.add(
+      "result-modal"
+    );
+
+
+  playSound(
+    "applause"
+  );
+
 
   launchFireworks();
+
 }
 
 
@@ -546,42 +1157,68 @@ function acceptDeal(offer) {
 
 function declineDealModal() {
 
-  if (declineHandled) return;
+  if (declineHandled) {
+    return;
+  }
 
-  declineHandled = true;
 
-  stopSound("suspenseMusic");
+  declineHandled =
+    true;
 
-  playSound("declineSound");
+
+  stopSound(
+    "suspenseMusic"
+  );
+
+
+  playSound(
+    "declineSound"
+  );
 
 
   // ------------------------------------------------------
-  // Move to next round
+  // MOVE TO NEXT ROUND
   // ------------------------------------------------------
 
   currentRound++;
 
+
   let casesToOpen;
 
-  if (currentRound < rounds.length) {
+
+  if (
+    currentRound <
+    rounds.length
+  ) {
+
     casesToOpen =
       rounds[currentRound];
+
   } else {
-    casesToOpen = 1;
+
+    casesToOpen =
+      1;
+
   }
 
 
   const roundName =
-    currentRound < rounds.length
+    currentRound <
+      rounds.length
+
       ? `Round ${currentRound + 1}`
+
       : "Final Round";
 
 
   // ------------------------------------------------------
-  // Tell player how many photos to reveal
+  // NEXT ROUND MESSAGE
   // ------------------------------------------------------
 
-  document.getElementById("offerDetails").innerHTML = `
+  document.getElementById(
+    "offerDetails"
+  ).innerHTML = `
+
     <p class="message">
       CHANCE IT!
     </p>
@@ -593,33 +1230,60 @@ function declineDealModal() {
     <p class="cases-to-open">
       Choose
       <strong>${casesToOpen}</strong>
-      more photo${casesToOpen === 1 ? "" : "s"} to reveal.
+      more photo${casesToOpen === 1 ? "" : "s"}
+      to reveal.
     </p>
+
   `;
 
-  document.getElementById("offerModal").style.display =
+
+  document.getElementById(
+    "offerModal"
+  ).style.display =
     "flex";
 
 
-  // Keep Chance It / next-round instruction visible
-  // for 6 seconds.
+  // ------------------------------------------------------
+  // KEEP NEXT-ROUND MESSAGE UP FOR 6 SECONDS
+  // ------------------------------------------------------
+
   setTimeout(() => {
 
-    document.getElementById("offerModal").style.display =
+    document.getElementById(
+      "offerModal"
+    ).style.display =
       "none";
+
 
     renderBriefcases();
 
+
     updateSidePanels();
 
-    document.getElementById("gameMessage").textContent =
-      `Choose ${casesToOpen} photo${casesToOpen === 1 ? "" : "s"} to reveal.`;
 
-    offerActive = false;
+    const gameMessage =
+      document.getElementById(
+        "gameMessage"
+      );
 
-    declineHandled = false;
+
+    if (gameMessage) {
+
+      gameMessage.textContent =
+        `Choose ${casesToOpen} photo${casesToOpen === 1 ? "" : "s"} to reveal.`;
+
+    }
+
+
+    offerActive =
+      false;
+
+
+    declineHandled =
+      false;
 
   }, 6000);
+
 }
 
 
@@ -628,7 +1292,9 @@ function declineDealModal() {
 // ======================================================
 
 function playAgain() {
+
   window.location.reload();
+
 }
 
 
@@ -636,7 +1302,9 @@ function playAgain() {
 // ROUND / STARTING INSTRUCTION MODAL
 // ======================================================
 
-function showRoundModal(roundDisplay) {
+function showRoundModal(
+  roundDisplay
+) {
 
   let roundHTML;
 
@@ -645,24 +1313,25 @@ function showRoundModal(roundDisplay) {
   // START OF GAME
   // ------------------------------------------------------
 
-  // At the very beginning,
-  // ONLY ask the player to choose a personal pick.
   if (
     roundDisplay === 1 &&
     !chosenBox
   ) {
 
     roundHTML = `
+
       <p class="message">
-        Welcome to Cash It or Chance It!
+        WELCOME TO CASH IT OR CHANCE IT!
       </p>
 
       <p class="cases-to-open">
-        Choose your personal pick.
+        Choose your pick to start the game.
       </p>
+
     `;
 
   } else {
+
 
     // ----------------------------------------------------
     // NORMAL ROUND ANNOUNCEMENT
@@ -671,46 +1340,93 @@ function showRoundModal(roundDisplay) {
     const roundIndex =
       roundDisplay - 1;
 
+
     const casesToOpen =
-      rounds[roundIndex] ?? 1;
+      rounds[
+        roundIndex
+      ] ?? 1;
+
 
     roundHTML = `
+
       <p class="message">
-        Round ${roundDisplay}
+        ROUND ${roundDisplay}
       </p>
 
       <p class="cases-to-open">
+
         Choose
-        <strong>${casesToOpen}</strong>
-        photo${casesToOpen === 1 ? "" : "s"} to reveal.
+
+        <strong>
+          ${casesToOpen}
+        </strong>
+
+        photo${casesToOpen === 1 ? "" : "s"}
+        to reveal.
+
       </p>
+
     `;
+
   }
 
 
-  document.getElementById("offerDetails").innerHTML =
+  document.getElementById(
+    "offerDetails"
+  ).innerHTML =
     roundHTML;
 
-  document.getElementById("offerModal").style.display =
+
+  document.getElementById(
+    "offerModal"
+  ).style.display =
     "flex";
 
 
-  // Initial "Choose your personal pick"
-  // message stays up for 5 seconds.
+  // ------------------------------------------------------
+  // STARTING INSTRUCTION
+  // ------------------------------------------------------
+
   setTimeout(() => {
 
-    document.getElementById("offerModal").style.display =
+    document.getElementById(
+      "offerModal"
+    ).style.display =
       "none";
 
-    document
-      .querySelector(".modal-content")
-      .classList.remove("result-modal");
+
+    const modalContent =
+      document.querySelector(
+        ".modal-content"
+      );
+
+
+    if (modalContent) {
+
+      modalContent.classList.remove(
+        "result-modal"
+      );
+
+    }
+
 
     if (!chosenBox) {
 
-      document.getElementById("gameMessage").textContent =
-        "Choose your personal pick.";
+      const gameMessage =
+        document.getElementById(
+          "gameMessage"
+        );
+
+
+      if (gameMessage) {
+
+        gameMessage.textContent =
+          "Choose a photo to make your pick.";
+
+      }
+
     }
 
   }, 5000);
+
 }

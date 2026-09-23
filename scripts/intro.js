@@ -1,182 +1,402 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
 
-  // ======================================================
-  // ELEMENTS
-  // ======================================================
+    // ==================================================
+    // ELEMENTS
+    // ==================================================
 
-  const introVideo =
-    document.getElementById('introVideo');
+    const introVideo =
+      document.getElementById(
+        "introVideo"
+      );
 
-  const introContainer =
-    document.getElementById('introVideoContainer');
+    const introContainer =
+      document.getElementById(
+        "introVideoContainer"
+      );
 
-  const introButtons =
-    document.getElementById('introButtons');
+    const introButtons =
+      document.getElementById(
+        "introButtons"
+      );
 
-  const playButton =
-    document.getElementById('introPlayButton');
+    const playButton =
+      document.getElementById(
+        "introPlayButton"
+      );
 
-  const skipButton =
-    document.getElementById('skipIntroButton');
+    const skipButton =
+      document.getElementById(
+        "skipIntroButton"
+      );
 
-  const fullScreenButton =
-    document.getElementById('introFullScreenButton');
+    const fullScreenButton =
+      document.getElementById(
+        "introFullScreenButton"
+      );
 
-  const watchIntroBtn =
-    document.getElementById('watchIntroBtn');
+    const watchIntroBtn =
+      document.getElementById(
+        "watchIntroBtn"
+      );
 
+    const backgroundMusic =
+      document.getElementById(
+        "backgroundMusic"
+      );
 
-  // ======================================================
-  // PLAY INTRO
-  // ======================================================
-
-  playButton.addEventListener('click', () => {
-
-    // Make sure sound is on.
-    introVideo.muted = false;
-
-    // Start the intro video.
-    introVideo.play().catch(err => {
-      console.error("Video play error:", err);
-    });
-
-    // Hide ALL intro buttons while the video plays.
-    introButtons.style.display = 'none';
-
-  });
+    const musicToggleBtn =
+      document.getElementById(
+        "musicToggleBtn"
+      );
 
 
-  // ======================================================
-  // INTRO FULL SCREEN BUTTON
-  // ======================================================
+    let musicEnabled = true;
 
-  fullScreenButton.addEventListener('click', () => {
 
-    if (!document.fullscreenElement) {
+    // ==================================================
+    // BACKGROUND MUSIC
+    // ==================================================
 
-      document.documentElement
-        .requestFullscreen()
+    if (backgroundMusic) {
+
+      backgroundMusic.volume =
+        0.12;
+
+    }
+
+
+    function updateMusicButton() {
+
+      if (!musicToggleBtn) return;
+
+
+      if (
+        musicEnabled &&
+        backgroundMusic &&
+        !backgroundMusic.paused
+      ) {
+
+        musicToggleBtn.textContent =
+          "🔊 Music On";
+
+        musicToggleBtn.classList.remove(
+          "music-off"
+        );
+
+      }
+
+      else {
+
+        musicToggleBtn.textContent =
+          "🔇 Music Off";
+
+        musicToggleBtn.classList.add(
+          "music-off"
+        );
+
+      }
+
+    }
+
+
+
+    function startBackgroundMusic() {
+
+      if (
+        !backgroundMusic ||
+        !musicEnabled
+      ) {
+        return;
+      }
+
+
+      backgroundMusic.volume =
+        0.12;
+
+
+      backgroundMusic
+        .play()
+        .then(() => {
+
+          updateMusicButton();
+
+        })
         .catch(err => {
 
-          console.error(
-            `Error attempting to enable full-screen mode: ${err.message} (${err.name})`
+          console.log(
+            "Background music waiting for interaction:",
+            err
           );
 
         });
 
-    } else {
+    }
 
-      document.exitFullscreen();
+
+
+    function stopBackgroundMusic() {
+
+      if (!backgroundMusic) return;
+
+      backgroundMusic.pause();
+
+      updateMusicButton();
 
     }
 
-  });
 
 
-  // ======================================================
-  // FULLSCREEN CHANGE
-  // ======================================================
+    // ==================================================
+    // MUSIC BUTTON
+    // ==================================================
 
-  document.addEventListener('fullscreenchange', () => {
+    if (musicToggleBtn) {
 
-    if (document.fullscreenElement) {
+      musicToggleBtn.addEventListener(
+        "click",
+        () => {
 
-      fullScreenButton.textContent =
-        "Exit Full Screen";
-
-    } else {
-
-      fullScreenButton.textContent =
-        "Full Screen";
-
-    }
-
-  });
+          if (!backgroundMusic) return;
 
 
-  // ======================================================
-  // SKIP INTRO
-  // ======================================================
+          if (
+            musicEnabled &&
+            !backgroundMusic.paused
+          ) {
 
-  skipButton.addEventListener('click', () => {
+            musicEnabled = false;
 
-    // Stop the video.
-    introVideo.pause();
+            stopBackgroundMusic();
 
-    // Fade the intro screen away.
-    introContainer.style.transition =
-      'opacity 1s';
+          }
 
-    introContainer.style.opacity =
-      '0';
+          else {
 
-    setTimeout(() => {
+            musicEnabled = true;
 
-      introContainer.style.display =
-        'none';
+            startBackgroundMusic();
 
-    }, 1000);
+          }
 
-  });
-
-
-  // ======================================================
-  // INTRO VIDEO FINISHED
-  // ======================================================
-
-  introVideo.addEventListener('ended', () => {
-
-    // Fade the intro screen away.
-    introContainer.style.transition =
-      'opacity 1s';
-
-    introContainer.style.opacity =
-      '0';
-
-    setTimeout(() => {
-
-      introContainer.style.display =
-        'none';
-
-    }, 1000);
-
-  });
-
-
-  // ======================================================
-  // WATCH INTRO AGAIN
-  // ======================================================
-
-  watchIntroBtn.addEventListener('click', () => {
-
-    // Reset the video to the beginning.
-    introVideo.pause();
-    introVideo.currentTime = 0;
-
-    // Bring the intro screen back.
-    introContainer.style.display =
-      'flex';
-
-    introContainer.style.opacity =
-      '1';
-
-    // Restore all three intro buttons.
-    introButtons.style.display =
-      'flex';
-
-    // Update fullscreen button text.
-    if (document.fullscreenElement) {
-
-      fullScreenButton.textContent =
-        "Exit Full Screen";
-
-    } else {
-
-      fullScreenButton.textContent =
-        "Full Screen";
+        }
+      );
 
     }
 
-  });
 
-});
+
+    // ==================================================
+    // PLAY INTRO
+    // ==================================================
+
+    if (playButton) {
+
+      playButton.addEventListener(
+        "click",
+        () => {
+
+          stopBackgroundMusic();
+
+          introVideo.muted =
+            false;
+
+          introVideo
+            .play()
+            .catch(err => {
+
+              console.error(
+                "Video play error:",
+                err
+              );
+
+            });
+
+
+          introButtons.style.display =
+            "none";
+
+        }
+      );
+
+    }
+
+
+
+    // ==================================================
+    // INTRO FULLSCREEN
+    // ==================================================
+
+    if (fullScreenButton) {
+
+      fullScreenButton.addEventListener(
+        "click",
+        () => {
+
+          if (
+            !document.fullscreenElement
+          ) {
+
+            document.documentElement
+              .requestFullscreen()
+              .catch(err => {
+
+                console.error(
+                  "Fullscreen error:",
+                  err
+                );
+
+              });
+
+          }
+
+          else {
+
+            document.exitFullscreen();
+
+          }
+
+        }
+      );
+
+    }
+
+
+
+    // ==================================================
+    // FULLSCREEN BUTTON TEXT
+    // ==================================================
+
+    document.addEventListener(
+      "fullscreenchange",
+      () => {
+
+        if (!fullScreenButton) {
+          return;
+        }
+
+
+        fullScreenButton.textContent =
+          document.fullscreenElement
+            ? "Exit Full Screen"
+            : "Full Screen";
+
+      }
+    );
+
+
+
+    // ==================================================
+    // CLOSE INTRO
+    // ==================================================
+
+    function closeIntro() {
+
+      introContainer.style.transition =
+        "opacity 1s";
+
+      introContainer.style.opacity =
+        "0";
+
+
+      setTimeout(() => {
+
+        introContainer.style.display =
+          "none";
+
+      }, 1000);
+
+
+      startBackgroundMusic();
+
+    }
+
+
+
+    // ==================================================
+    // SKIP INTRO
+    // ==================================================
+
+    if (skipButton) {
+
+      skipButton.addEventListener(
+        "click",
+        () => {
+
+          introVideo.pause();
+
+          closeIntro();
+
+        }
+      );
+
+    }
+
+
+
+    // ==================================================
+    // INTRO FINISHED
+    // ==================================================
+
+    introVideo.addEventListener(
+      "ended",
+      () => {
+
+        closeIntro();
+
+      }
+    );
+
+
+
+    // ==================================================
+    // WATCH INTRO AGAIN
+    // ==================================================
+
+    if (watchIntroBtn) {
+
+      watchIntroBtn.addEventListener(
+        "click",
+        () => {
+
+          stopBackgroundMusic();
+
+
+          introVideo.pause();
+
+          introVideo.currentTime =
+            0;
+
+
+          introContainer.style.display =
+            "flex";
+
+          introContainer.style.opacity =
+            "1";
+
+
+          introButtons.style.display =
+            "flex";
+
+
+          if (fullScreenButton) {
+
+            fullScreenButton.textContent =
+              document.fullscreenElement
+                ? "Exit Full Screen"
+                : "Full Screen";
+
+          }
+
+        }
+      );
+
+    }
+
+
+
+    updateMusicButton();
+
+  }
+);
